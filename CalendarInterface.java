@@ -1,7 +1,7 @@
 /**
  * Calendar file creation program
  * @author Chase Matayoshi, Michelle-Lei Pinlac, Mauricio Renon
- * @verion
+ * @verion 1.0
  * @since 7/27/2014
  * 
  */
