@@ -130,7 +130,7 @@ public class Calendar {
 		yearList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW)); //background color
 		yearList.setItems(new String[] {"2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", 
 				"2024", "2025", "2026", "2027", "2028", "2029", "2030"}); //entries
-		yearList.setBounds(223, 128, 57, 93); //postion it is on the frame
+		yearList.setBounds(223, 128, 57, 93); //position it is on the frame
 		
 		//start time label
 		Label startTimeLabel = new Label(CalendarGUI, SWT.BORDER | SWT.SHADOW_IN); 
@@ -278,7 +278,7 @@ public class Calendar {
             if (year > 0 && month >= 0 && day >= 0 && ehour >= 0 && emin >= 0)
             {
                 @SuppressWarnings("deprecation")
-				Date eventTime = new Date(year-1900, month, day+1, shour %24, emin);
+				Date eventTime = new Date(year-1900, month, day+1, ehour %24, emin);
                 event.setDateEnd(eventTime);        
             }
             
