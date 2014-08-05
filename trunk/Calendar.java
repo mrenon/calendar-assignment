@@ -297,8 +297,7 @@ public class Calendar {
             File file = new File("event.ics");
             
             Biweekly.write(calendar).go(file);
-            
-            System.out.println("Hello");
+
             JOptionPane.showMessageDialog(null, "Event Created");
         } catch (IOException ex)
         {
