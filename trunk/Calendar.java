@@ -1,4 +1,32 @@
 import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import javax.swing.JOptionPane;
+
+import org.eclipse.swt.widgets.Display; 
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.widgets.Button;
+
+import biweekly.Biweekly;
+import biweekly.ICalendar;
+import biweekly.component.VEvent;
+import biweekly.property.DateStart;
+import biweekly.property.Description;
+import biweekly.property.Summary;
+import biweekly.util.DateTimeComponents;
+import biweekly.util.Duration;
+
+import org.eclipse.swt.widgets.Composite;
 
 
 public class Calendar {
@@ -13,6 +41,12 @@ public class Calendar {
         private List startMinList;
         private List endHourList;
         private List endMinList;
+        private Composite startGroupButton;
+        private Composite endGroupButton;
+        private Button sAM;
+        private Button sPM;
+        private Button eAM;
+        private Button ePM;
 
         /**
          * Launch the application.
@@ -50,7 +84,7 @@ public class Calendar {
                 CalendarGUI.setTouchEnabled(true);
                 CalendarGUI.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 CalendarGUI.setText("Calendar Interface");
-                CalendarGUI.setSize(574, 466);
+                CalendarGUI.setSize(563, 466);
                 CalendarGUI.setEnabled(true);
                 
                 //creates the event label
@@ -136,22 +170,21 @@ public class Calendar {
                                 "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", 
                                 "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", 
                                 "52", "53", "54", "55", "56", "57", "58", "59"}); //entries
-                startMinList.setBounds(438, 128, 44, 37); //position
+                startMinList.setBounds(438, 128, 44, 37);
                 
-
-                // creates buttons for AM/PM options
-                Button sAMButton = new Button(CalendarGUI, SWT.CHECK);
-                sAMButton.setText("AM");
-                sAMButton.setSize(44, 16);
-                sAMButton.setLocation(498, 131);
-                sAMButton.setTouchEnabled(true);
-
-                Button sPMButton = new Button(CalendarGUI, SWT.CHECK);
-                sPMButton.setText("PM");
-                sPMButton.setSize(44, 16);
-                sPMButton.setLocation(498, 149);
-                sPMButton.setTouchEnabled(true);
+                startGroupButton = new Composite(CalendarGUI, SWT.BORDER);
+                startGroupButton.setBounds(488, 128, 49, 42);
                 
+                sAM = new Button(startGroupButton, SWT.RADIO);
+                sAM.setSelection(true);
+                sAM.setBounds(0, 0, 49, 16);
+                sAM.setText("AM");
+                
+                sPM = new Button(startGroupButton, SWT.RADIO);
+                sPM.setBounds(0, 22, 49, 16);
+                sPM.setText("PM");
+               
+               
                 //end time label
                 Label endTimeLabel = new Label(CalendarGUI, SWT.BORDER | SWT.SHADOW_IN);
                 endTimeLabel.setText("End Time");
@@ -181,21 +214,7 @@ public class Calendar {
                                 "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32",
                                 "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", 
                                 "52", "53", "54", "55", "56", "57", "58", "59"}); //entries 
-                endMinList.setBounds(438, 203, 44, 37); //position
-                
-                // creates buttons for AM/PM options
-                Button eAMButton = new Button(CalendarGUI, SWT.CHECK);
-                eAMButton.setText("AM");
-                eAMButton.setSize(44, 16);
-                eAMButton.setLocation(498, 205);
-                eAMButton.setTouchEnabled(true);
-
-                Button ePMButton = new Button(CalendarGUI, SWT.CHECK);
-                ePMButton.setSize(44, 15);
-                ePMButton.setLocation(498, 225);
-                ePMButton.setText("PM");
-                ePMButton.setTouchEnabled(true);
-                
+                endMinList.setBounds(438, 203, 44, 37);
                 
                 //description label
                 Label descripLabel = new Label(CalendarGUI, SWT.NONE);
@@ -213,16 +232,22 @@ public class Calendar {
                     };
                 // creates a push button to submit
                 Button pushButton = new Button (CalendarGUI, SWT.BORDER);
-                pushButton.setTouchEnabled(true);
-                pushButton.addSelectionListener(new SelectionAdapter() {
-                	@Override
-                	public void widgetSelected(SelectionEvent e) {
-                	}
-                });
                 pushButton.setLocation(219, 381);
                 pushButton.setText("Create Event");
                 pushButton.addListener(SWT.Selection, openerListener);
-                pushButton.pack();              
+                pushButton.pack();
+                
+                endGroupButton = new Composite(CalendarGUI, SWT.BORDER);
+                endGroupButton.setBounds(488, 203, 49, 42);
+                
+                eAM = new Button(endGroupButton, SWT.RADIO);
+                eAM.setText("AM");
+                eAM.setBounds(0, 0, 49, 16);
+                
+                ePM = new Button(endGroupButton, SWT.RADIO);
+                ePM.setSelection(true);
+                ePM.setText("PM");
+                ePM.setBounds(0, 22, 49, 16);
 
         }
 
@@ -230,6 +255,12 @@ public class Calendar {
         int month = monthList.getSelectionIndex();  // 0 to 11, or -1 if not selected
         int day = dayList.getSelectionIndex();   // 0 to 30, or -1 if not selected
         int year = -1;
+        
+        //just a easier way to store AM and PM times
+        int tempStartTime= 0; 
+        int tempEndTime = 0;
+        
+        
         if (yearList.getSelectionIndex() >= 0)
             year = Integer.parseInt(yearList.getSelection()[0]);
         int shour = -1, smin = -1, ehour = -1, emin = -1;
@@ -241,13 +272,34 @@ public class Calendar {
             ehour = Integer.parseInt(endHourList.getSelection()[0]);
         if (endMinList.getSelectionIndex() >= 0)
             emin = Integer.parseInt(endMinList.getSelection()[0]);
+        
+        //checks if PM is selected and goes off the 24h system we previously implemented
+        if (sPM.getSelection())
+        	tempStartTime = shour + 12;
+        else
+        	tempStartTime = shour;
+        if (ePM.getSelection())
+        	tempEndTime = ehour + 12;
+        else
+        	tempEndTime = ehour;
+        	
 
         
         System.out.println("Event name: " + eventNameBox.getText().trim());
         System.out.println("Description: " + descripBox.getText().trim());
         System.out.println("Date: " + year + "-" + (month+1) + "-" + (day+1));
-        System.out.println("Start Time: " + shour + ":" + smin);
-        System.out.println("End Time: " + ehour + ":" + emin);
+        //prints AM/PM
+        if(sPM.getSelection())
+        	System.out.println("Start Time: " + shour + ":" + smin + "PM");
+        else
+        	System.out.println("Start Time: " + shour + ":" + smin + "AM");
+        if(ePM.getSelection())
+        	System.out.println("End Time: " + ehour + ":" + emin + "PM");
+        else
+        	System.out.println("End Time: " + ehour + ":" + emin + "AM");
+        
+        
+        
         
         try
         {
@@ -275,16 +327,16 @@ public class Calendar {
             DateTimeComponents components = new DateTimeComponents(2014, 07, 28, 15, 0, 0, false);
             
             //time in milliseconds used to generate the time
-            if (year > 0 && month >= 0 && day >= 0 && shour >= 0 && smin >= 0)
+            if (year > 0 && month >= 0 && day >= 0 && tempStartTime >= 0 && smin >= 0)
             {
                 @SuppressWarnings("deprecation")
-                                Date eventTime = new Date(year-1900, month, day+1, shour %12, smin);
+                                Date eventTime = new Date(year-1900, month, day+1, tempStartTime %24, smin);
                 event.setDateStart(eventTime);        
             }
-            if (year > 0 && month >= 0 && day >= 0 && ehour >= 0 && emin >= 0)
+            if (year > 0 && month >= 0 && day >= 0 && tempEndTime >= 0 && emin >= 0)
             {
                 @SuppressWarnings("deprecation")
-                                Date eventTime = new Date(year-1900, month, day+1, ehour %12, emin);
+                                Date eventTime = new Date(year-1900, month, day+1, tempEndTime %24, emin);
                 event.setDateEnd(eventTime);        
             }
             
@@ -310,5 +362,7 @@ public class Calendar {
             
         }
         
+        }
+}
         }
 }
