@@ -164,6 +164,18 @@ public class Calendar {
 				"33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", 
 				"52", "53", "54", "55", "56", "57", "58", "59"}); //entries
 		startMinList.setBounds(438, 128, 44, 37); //position
+      
+      // creates buttons for AM/PM options
+              Button[] startMin = new Button[2];
+            	startMin[0] = new Button(CalendarGUI, SWT.CHECK);
+            	startMin[0].setText("AM");
+            	startMin[0].setBounds(498, 130, 44, 117);
+            	startMin[0].pack();
+            	
+            	startMin[1] = new Button(CalendarGUI, SWT.CHECK);
+            	startMin[1].setText("PM");
+            	startMin[1].setBounds(498, 145, 44, 117);
+            	startMin[1].pack();
 		
 		//end time label
 		Label endTimeLabel = new Label(CalendarGUI, SWT.BORDER | SWT.SHADOW_IN);
@@ -196,6 +208,19 @@ public class Calendar {
 				"33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", 
 				"52", "53", "54", "55", "56", "57", "58", "59"}); //entries 
 		endMinList.setBounds(438, 203, 44, 37); //position
+      
+     // creates buttons for AM/PM options
+              Button[] endMin = new Button[2];
+            	endMin[0] = new Button(CalendarGUI, SWT.CHECK);
+            	endMin[0].setText("AM");
+            	endMin[0].setBounds(498, 205, 44, 117);
+            	endMin[0].pack();
+            	
+            	
+            	endMin[1] = new Button(CalendarGUI, SWT.CHECK);
+            	endMin[1].setText("PM");
+            	endMin[1].setBounds(498, 220, 44, 117);
+            	endMin[1].pack();
 		
 		//description label
 		Label descripLabel = new Label(CalendarGUI, SWT.NONE);
