@@ -357,12 +357,14 @@ public class Calendar {
             Biweekly.write(calendar).go(file);
 
             JOptionPane.showMessageDialog(null, "Event Created");
+            
+            System.exit(0);
+            
         } catch (IOException ex)
         {
             
         }
         
         }
-}
+
         }
-}
