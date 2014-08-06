@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Button;
 import biweekly.Biweekly;
 import biweekly.ICalendar;
 import biweekly.component.VEvent;
+import biweekly.property.DateEnd;
 import biweekly.property.DateStart;
 import biweekly.property.Description;
 import biweekly.property.Summary;
@@ -43,6 +44,9 @@ public class Calendar {
         private List startMinList;
         private List endHourList;
         private List endMinList;
+        private List endMonthList;
+        private List endYearList;
+        private List endDayList;
         private Composite startGroupButton;
         private Composite endGroupButton;
         private Button sAM;
@@ -213,19 +217,19 @@ public class Calendar {
                 lblEndDate.setText("End Date");
                 
                 // makes a list of months for END date
-                List endMonthList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
+                endMonthList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
                 endMonthList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
                 endMonthList.setItems(new String[] {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"});
                 endMonthList.setBounds(10, 300, 111, 101);
                 
                 // makes a list of days for END date
-                List endDayList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
+                endDayList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
                 endDayList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
                 endDayList.setItems(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"});
                 endDayList.setBounds(156, 300, 42, 101);
                 
                 // makes a list of years for END date
-                List endYearList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
+                endYearList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
                 endYearList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
                 endYearList.setItems(new String[] {"2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"});
                 endYearList.setBounds(223, 300, 57, 100);
@@ -327,6 +331,10 @@ public class Calendar {
         int day = dayList.getSelectionIndex();   // 0 to 30, or -1 if not selected
         int year = -1;
         
+        int endMonth = endMonthList.getSelectionIndex();
+        int endDay = endDayList.getSelectionIndex();
+        int endYear = -1;
+        
         //just a easier way to store AM and PM times
         int tempStartTime= 0; 
         int tempEndTime = 0;
@@ -334,6 +342,8 @@ public class Calendar {
         
         if (yearList.getSelectionIndex() >= 0)
             year = Integer.parseInt(yearList.getSelection()[0]);
+        if (endYearList.getSelectionIndex() >= 0)
+        	endYear = Integer.parseInt(endYearList.getSelection()[0]);
         int shour = -1, smin = -1, ehour = -1, emin = -1;
         if (startHourList.getSelectionIndex() >= 0)
             shour = Integer.parseInt(startHourList.getSelection()[0]);
@@ -356,12 +366,17 @@ public class Calendar {
         
         System.out.println("Event name: " + eventNameBox.getText().trim());
         System.out.println("Description: " + descripBox.getText().trim());
-        System.out.println("Date: " + year + "-" + (month+1) + "-" + (day+1));
+        System.out.println("Start Date: " + year + "-" + (month+1) + "-" + (day+1));
+      
         //prints AM/PM
         if(sPM.getSelection())
         	System.out.println("Start Time: " + shour + ":" + smin + "PM");
         else
         	System.out.println("Start Time: " + shour + ":" + smin + "AM");
+        
+        System.out.println("End Date: " + endYear + "-" + (endMonth+1) + "-" + (endDay+1));
+        
+        //prints AM/PM
         if(ePM.getSelection())
         	System.out.println("End Time: " + ehour + ":" + emin + "PM");
         else
@@ -428,15 +443,18 @@ public class Calendar {
                                 Date eventTime = new Date(year-1900, month, day+1, tempStartTime %24, smin);
         			event.setDateStart(eventTime);        
         		}
-        		if (year > 0 && month >= 0 && day >= 0 && tempEndTime >= 0 && emin >= 0)
+        		if (endYear > 0 && endMonth >= 0 && endDay >= 0 && tempEndTime >= 0 && emin >= 0)
         		{
         			@SuppressWarnings("deprecation")
-                                Date eventTime = new Date(year-1900, month, day+1, tempEndTime %24, emin);
+                                Date eventTime = new Date(year-1900, endMonth, endDay+1, tempEndTime %24, emin);
         			event.setDateEnd(eventTime);        
         		}
             
         		DateStart startDate = new DateStart(null, false);
         		startDate = new DateStart(components);
+        		
+        		DateEnd endDate = new DateEnd(null, false);
+        		endDate = new DateEnd(components);
             
             
         		//adds the duration of the event
