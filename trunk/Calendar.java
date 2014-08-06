@@ -27,6 +27,8 @@ import biweekly.util.DateTimeComponents;
 import biweekly.util.Duration;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.custom.CLabel;
 
 
 public class Calendar {
@@ -47,6 +49,7 @@ public class Calendar {
         private Button sPM;
         private Button eAM;
         private Button ePM;
+        private boolean valid;
 
         /**
          * Launch the application.
@@ -81,86 +84,103 @@ public class Calendar {
          */
         protected void createContents() {
                 CalendarGUI = new Shell();
+                CalendarGUI.setMinimumSize(new Point(69, 52));
                 CalendarGUI.setTouchEnabled(true);
                 CalendarGUI.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 CalendarGUI.setText("Calendar Interface");
-                CalendarGUI.setSize(563, 466);
+                CalendarGUI.setSize(563, 600);
                 CalendarGUI.setEnabled(true);
                 
                 //creates the event label
                 Label eventNameLabel = new Label(CalendarGUI, SWT.BORDER | SWT.SHADOW_IN);
+                eventNameLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 eventNameLabel.setAlignment(SWT.CENTER);
-                eventNameLabel.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
-                eventNameLabel.setBounds(10, 36, 94, 26);
-                eventNameLabel.setText("Event Name:");
+                eventNameLabel.setFont(SWTResourceManager.getFont("Franklin Gothic Medium", 15, SWT.BOLD));
+                eventNameLabel.setBounds(223, 10, 94, 22);
+                eventNameLabel.setText("Event Name");
                 
                 //creates a text field where you can enter the event's name
                 eventNameBox = new Text(CalendarGUI, SWT.BORDER);
-                eventNameBox.setBounds(154, 36, 230, 49);
+                eventNameBox.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
+                eventNameBox.setBounds(154, 34, 230, 49);
                 
-                //month label
+                // start date label
+                Label lblStartDate = new Label(CalendarGUI, SWT.NONE);
+                lblStartDate.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                lblStartDate.setFont(SWTResourceManager.getFont("Franklin Gothic Medium", 15, SWT.BOLD));
+                lblStartDate.setBounds(0, 88, 85, 22);
+                lblStartDate.setText("Start Date");
+                
+                //start month label
                 Label monthLabel = new Label(CalendarGUI, SWT.BORDER);
+                monthLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 monthLabel.setAlignment(SWT.CENTER);
-                monthLabel.setBounds(41, 107, 44, 15);
+                monthLabel.setBounds(41, 116, 44, 15);
                 monthLabel.setText("Month");
                 
-                //makes a list of the months that you can select from
+                //makes a list of the months that you can select from for START date
+                
                 monthList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL); //creates a list
                 monthList.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK)); //sets the font color
                 monthList.setTouchEnabled(true); 
                 monthList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW)); //background color
                 monthList.setItems(new String[] {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"}); //entries in the list
-                monthList.setBounds(10, 128, 111, 93); //position it is on the frame
+                monthList.setBounds(10, 137, 111, 93); //position it is on the frame
                 
-                //day label
+                //start day label
                 Label dayLabel = new Label(CalendarGUI, SWT.BORDER | SWT.SHADOW_IN);
+                dayLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 dayLabel.setAlignment(SWT.CENTER);
-                dayLabel.setBounds(154, 107, 31, 15);
+                dayLabel.setBounds(154, 116, 31, 15);
                 dayLabel.setText("Day");
                 
-                //makes a list of the days that you can select from
+                //makes a list of the days that you can select from for START date
                 dayList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL); //creates a list
                 dayList.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
                 dayList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW)); //background color
                 dayList.setItems(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", 
                                 "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}); //entries in the list
-                dayList.setBounds(154, 128, 44, 93); //position it is on the frame
+                dayList.setBounds(154, 137, 44, 93); //position it is on the frame
                 
-                //year label
+                //start year label
                 Label yearLabel = new Label(CalendarGUI, SWT.BORDER | SWT.SHADOW_IN);
+                yearLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 yearLabel.setAlignment(SWT.CENTER);
-                yearLabel.setBounds(233, 107, 31, 15);
+                yearLabel.setBounds(233, 116, 31, 15);
                 yearLabel.setText("Year");
                 
-                //makes a list of the years that you can select from
+                //makes a list of the years that you can select from for START date
                 yearList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL); //creates a list
                 yearList.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK)); //font color
                 yearList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW)); //background color
                 yearList.setItems(new String[] {"2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", 
                                 "2024", "2025", "2026", "2027", "2028", "2029", "2030"}); //entries
-                yearList.setBounds(223, 128, 57, 93); //position it is on the frame
+                yearList.setBounds(223, 137, 57, 93); //position it is on the frame
                 
                 //start time label
                 Label startTimeLabel = new Label(CalendarGUI, SWT.BORDER | SWT.SHADOW_IN); 
+                startTimeLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 startTimeLabel.setAlignment(SWT.CENTER);
-                startTimeLabel.setBounds(297, 131, 66, 15);
+                startTimeLabel.setBounds(286, 127, 66, 15);
                 startTimeLabel.setText("Start Time");
                 
                 
                 //hour label for start time
                 Label sHourLabel = new Label(CalendarGUI, SWT.BORDER | SWT.SHADOW_IN);
-                sHourLabel.setBounds(377, 107, 31, 15);
+                sHourLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                sHourLabel.setBounds(356, 145, 31, 15);
                 sHourLabel.setText("Hour");
                 
                 //creates the list for the start time's hour
                 startHourList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL); //creates the list
                 startHourList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW)); //background color
                 startHourList.setItems(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}); //entries based on 24-hours
-                startHourList.setBounds(369, 128, 46, 37); //position
+                startHourList.setBounds(356, 166, 46, 37); //position
                 
                 //minutes label for start time
                 Label sMinLabel = new Label(CalendarGUI, SWT.BORDER | SWT.SHADOW_IN);
-                sMinLabel.setBounds(438, 107, 44, 15);
+                sMinLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                sMinLabel.setBounds(422, 145, 44, 15);
                 sMinLabel.setText("Minutes");
                 
                 //creates the list for the start time's minutes
@@ -170,10 +190,11 @@ public class Calendar {
                                 "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", 
                                 "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", 
                                 "52", "53", "54", "55", "56", "57", "58", "59"}); //entries
-                startMinList.setBounds(438, 128, 44, 37);
+                startMinList.setBounds(422, 166, 44, 37);
                 
-                startGroupButton = new Composite(CalendarGUI, SWT.BORDER);
-                startGroupButton.setBounds(488, 128, 49, 42);
+                startGroupButton = new Composite(CalendarGUI, SWT.NONE);
+                startGroupButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                startGroupButton.setBounds(472, 166, 49, 42);
                 
                 sAM = new Button(startGroupButton, SWT.RADIO);
                 sAM.setSelection(true);
@@ -183,29 +204,75 @@ public class Calendar {
                 sPM = new Button(startGroupButton, SWT.RADIO);
                 sPM.setBounds(0, 22, 49, 16);
                 sPM.setText("PM");
-               
+                
+               // end date label
+                Label lblEndDate = new Label(CalendarGUI, SWT.NONE);
+                lblEndDate.setFont(SWTResourceManager.getFont("Franklin Gothic Medium", 15, SWT.BOLD));
+                lblEndDate.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                lblEndDate.setBounds(0, 247, 72, 28);
+                lblEndDate.setText("End Date");
+                
+                // makes a list of months for END date
+                List endMonthList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
+                endMonthList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
+                endMonthList.setItems(new String[] {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"});
+                endMonthList.setBounds(10, 300, 111, 101);
+                
+                // makes a list of days for END date
+                List endDayList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
+                endDayList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
+                endDayList.setItems(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"});
+                endDayList.setBounds(156, 300, 42, 101);
+                
+                // makes a list of years for END date
+                List endYearList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
+                endYearList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
+                endYearList.setItems(new String[] {"2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"});
+                endYearList.setBounds(223, 300, 57, 100);
+                
+                // end month label
+                Label endMonthLabel = new Label(CalendarGUI, SWT.NONE);
+                endMonthLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                endMonthLabel.setBounds(41, 281, 59, 23);
+                endMonthLabel.setText("Month");
+                
+                // end day label
+                Label endDayLabel = new Label(CalendarGUI, SWT.NONE);
+                endDayLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                endDayLabel.setBounds(167, 281, 31, 14);
+                endDayLabel.setText("Day");
+                
+               // end year label
+                Label endYearLabel = new Label(CalendarGUI, SWT.NONE);
+                endYearLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                endYearLabel.setBounds(228, 281, 36, 14);
+                endYearLabel.setText("Year");
+                
                
                 //end time label
                 Label endTimeLabel = new Label(CalendarGUI, SWT.BORDER | SWT.SHADOW_IN);
+                endTimeLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 endTimeLabel.setText("End Time");
                 endTimeLabel.setAlignment(SWT.CENTER);
-                endTimeLabel.setBounds(297, 206, 66, 15);
+                endTimeLabel.setBounds(286, 300, 66, 15);
                 
                 //end time's hour label
                 Label eHourLabel = new Label(CalendarGUI, SWT.BORDER | SWT.SHADOW_IN);
+                eHourLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 eHourLabel.setText("Hour");
-                eHourLabel.setBounds(377, 182, 31, 15);
+                eHourLabel.setBounds(342, 321, 31, 15);
                 
                 //creates the list for the end time's hours
                 endHourList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL); //creates the list
                 endHourList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));  //background color
                 endHourList.setItems(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}); //entries
-                endHourList.setBounds(369, 203, 46, 37); //position
+                endHourList.setBounds(342, 335, 46, 37); //position
                 
                 //end time's minutes label
                 Label eMinLabel = new Label(CalendarGUI, SWT.BORDER | SWT.SHADOW_IN);
+                eMinLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 eMinLabel.setText("Minutes");
-                eMinLabel.setBounds(438, 182, 44, 15);
+                eMinLabel.setBounds(411, 321, 44, 15);
                 
                 //creates the end time's minute list
                 endMinList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL); //creates the list
@@ -214,16 +281,19 @@ public class Calendar {
                                 "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32",
                                 "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", 
                                 "52", "53", "54", "55", "56", "57", "58", "59"}); //entries 
-                endMinList.setBounds(438, 203, 44, 37);
+                endMinList.setBounds(411, 335, 44, 37);
                 
                 //description label
                 Label descripLabel = new Label(CalendarGUI, SWT.NONE);
-                descripLabel.setBounds(218, 249, 62, 15);
+                descripLabel.setFont(SWTResourceManager.getFont("Franklin Gothic Medium", 15, SWT.BOLD));
+                descripLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                descripLabel.setBounds(223, 423, 94, 22);
                 descripLabel.setText("Description");
                 
                 //text field where you can enter a description for the event
                 descripBox = new Text(CalendarGUI, SWT.BORDER);
-                descripBox.setBounds(21, 270, 440, 93);
+                descripBox.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
+                descripBox.setBounds(53, 451, 440, 93);
                 
                 Listener openerListener = new Listener() {
                       public void handleEvent(Event event) {
@@ -232,22 +302,23 @@ public class Calendar {
                     };
                 // creates a push button to submit
                 Button pushButton = new Button (CalendarGUI, SWT.BORDER);
-                pushButton.setLocation(219, 381);
+                pushButton.setLocation(218, 550);
                 pushButton.setText("Create Event");
                 pushButton.addListener(SWT.Selection, openerListener);
                 pushButton.pack();
                 
-                endGroupButton = new Composite(CalendarGUI, SWT.BORDER);
-                endGroupButton.setBounds(488, 203, 49, 42);
+                endGroupButton = new Composite(CalendarGUI, SWT.NONE);
+                endGroupButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                endGroupButton.setBounds(472, 330, 49, 42);
                 
                 eAM = new Button(endGroupButton, SWT.RADIO);
+                eAM.setBounds(0, 26, 49, 16);
                 eAM.setText("AM");
-                eAM.setBounds(0, 0, 49, 16);
                 
                 ePM = new Button(endGroupButton, SWT.RADIO);
+                ePM.setBounds(0, 4, 49, 16);
                 ePM.setSelection(true);
                 ePM.setText("PM");
-                ePM.setBounds(0, 22, 49, 16);
 
         }
 
@@ -282,8 +353,6 @@ public class Calendar {
         	tempEndTime = ehour + 12;
         else
         	tempEndTime = ehour;
-        	
-
         
         System.out.println("Event name: " + eventNameBox.getText().trim());
         System.out.println("Description: " + descripBox.getText().trim());
@@ -303,68 +372,95 @@ public class Calendar {
         
         try
         {
-            //New calendar object
+        	
+        	valid = false;
+        	
+        	//temp variables to check if event name and description are empty fields
+        	String checkSummary = eventNameBox.getText().trim();
+        	String checkDescrip = descripBox.getText().trim();
+        	
+        	if(checkSummary.isEmpty() || checkDescrip.isEmpty()){ 
+        		JOptionPane.showMessageDialog(null, "Please Enter All Data Fields");
+        	}
+        	else if(month == -1 || day == -1 || year == -1 || tempEndTime == -1 || tempStartTime == -1){ //check if there is nothing selected in month, day, year, start and endtime
+        		JOptionPane.showMessageDialog(null, "Please Enter All Data Fields"); 
+        	}
+        	else if(tempEndTime < tempStartTime){ //check if end time is before start time
+            	JOptionPane.showMessageDialog(null, "Bad Hour Input");
+            }
+            else if(tempEndTime > tempStartTime && emin < smin){//create .ics file 
+            	valid = true;
+            }
+            else if(emin < smin){ //check if end time min is before start time min
+            	JOptionPane.showMessageDialog(null, "Bad min Input");
+            }
+            else{
+            	valid = true;
+            }
+        	
+        	if(valid == true){
+        		//New calendar object
             
-            ICalendar calendar = new ICalendar();
+        		ICalendar calendar = new ICalendar();
             
-            //New event object
+        		//New event object
+        		
+        		VEvent event = new VEvent();
             
-            VEvent event = new VEvent();
+        		//creates the title of the event and sets the language to English
             
-            //creates the title of the event and sets the language to English
+        		Summary summary = new Summary(eventNameBox.getText().trim());
+        		event.setSummary(summary);
+        		Description description = new Description(descripBox.getText().trim());
+        		event.setDescription(description);
             
-            Summary summary = new Summary(eventNameBox.getText().trim());
-            event.setSummary(summary);
-            
-            Description description = new Description(descripBox.getText().trim());
-            event.setDescription(description);
-            
-            summary.setLanguage("en-us");
+        		summary.setLanguage("en-us");
             	
-            TimeZone currentZone = TimeZone.getTimeZone("America/Hawaii");
-            Locale currentLocale = Locale.ENGLISH;
+        		TimeZone currentZone = TimeZone.getTimeZone("America/Hawaii");
+        		Locale currentLocale = Locale.ENGLISH;
             
-            DateTimeComponents components = new DateTimeComponents(2014, 07, 28, 15, 0, 0, false);
+        		DateTimeComponents components = new DateTimeComponents(2014, 07, 28, 15, 0, 0, false);
             
-            //time in milliseconds used to generate the time
-            if (year > 0 && month >= 0 && day >= 0 && tempStartTime >= 0 && smin >= 0)
-            {
-                @SuppressWarnings("deprecation")
+        		//time in milliseconds used to generate the time
+        		if (year > 0 && month >= 0 && day >= 0 && tempStartTime >= 0 && smin >= 0)
+        		{
+        			@SuppressWarnings("deprecation")
                                 Date eventTime = new Date(year-1900, month, day+1, tempStartTime %24, smin);
-                event.setDateStart(eventTime);        
-            }
-            if (year > 0 && month >= 0 && day >= 0 && tempEndTime >= 0 && emin >= 0)
-            {
-                @SuppressWarnings("deprecation")
+        			event.setDateStart(eventTime);        
+        		}
+        		if (year > 0 && month >= 0 && day >= 0 && tempEndTime >= 0 && emin >= 0)
+        		{
+        			@SuppressWarnings("deprecation")
                                 Date eventTime = new Date(year-1900, month, day+1, tempEndTime %24, emin);
-                event.setDateEnd(eventTime);        
-            }
+        			event.setDateEnd(eventTime);        
+        		}
             
-            DateStart startDate = new DateStart(null, false);
-            startDate = new DateStart(components);
-                
+        		DateStart startDate = new DateStart(null, false);
+        		startDate = new DateStart(components);
             
-            //adds the duration of the event
             
-            event.setDuration(new Duration.Builder().minutes(30).build());
+        		//adds the duration of the event
             
-            calendar.addEvent(event);
+        		event.setDuration(new Duration.Builder().minutes(30).build());
             
-            //outputs all information to a .ics file
+        		calendar.addEvent(event);
             
-            File file = new File("event.ics");
+        		//outputs all information to a .ics file
+        		
+        		File file = new File("event.ics");
             
-            Biweekly.write(calendar).go(file);
+        		Biweekly.write(calendar).go(file);
 
-            JOptionPane.showMessageDialog(null, "Event Created");
+        		JOptionPane.showMessageDialog(null, "Event Created");
             
-            System.exit(0);
-            
+        		System.exit(0);
+        		
+        	}
         } catch (IOException ex)
+
         {
             
         }
         
         }
-
-        }
+}
