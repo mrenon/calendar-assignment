@@ -416,10 +416,20 @@ public class Calendar {
         	else if(tempEndTime > tempStartTime && emin < smin)//create .ics file 
                 valid = true;
             else if(emin < smin) //check if end time min is before start time min
-                JOptionPane.showMessageDialog(null, "Bad min Input");
+                JOptionPane.showMessageDialog(null, "Bad Minute Input");
             else if(endYear < startYear)//check if the end year is before the start year
             	JOptionPane.showMessageDialog(null, "Bad Year Input");
-        	
+            else if(endMonth <= startMonth){//check if the end month is before the start month
+            	if(endYear < startYear)
+            		JOptionPane.showMessageDialog(null, "Bad Date Input");
+            	else if(endDay < startDay && endYear <= startYear)
+            		JOptionPane.showMessageDialog(null, "Bad Date Input");
+            	else if(endMonth < startMonth)
+            		JOptionPane.showMessageDialog(null, "Bad Date Input");
+            	else
+            		valid = true;
+            }
+            	
         	
         	/**************************************************************
         	 * if statements to check if the month is correct
@@ -459,6 +469,7 @@ public class Calendar {
             else if(endDay == 30 && endMonth == 10)
             	JOptionPane.showMessageDialog(null, "End Date Bad Input: It is November, so you cannot enter 31");
             
+        	
         	//passed all the tests ready for .ics file creation
             else
                 valid = true;
