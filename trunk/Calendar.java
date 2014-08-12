@@ -55,11 +55,12 @@ public class Calendar {
         private Button sPM;
         private Button eAM;
         private Button ePM;
-        private Button btnPrivate;
-        private Button btnPublic;
+        private Button privateButton;
+        private Button publicButton;
+        private Button confidentialButton;
         private boolean valid;
-        private Label lblNewLabel;
         private Label priorityDescriptionLabel;
+        
 
         /**
          * Launch the application.
@@ -113,6 +114,19 @@ public class Calendar {
                 eventNameBox = new Text(CalendarGUI, SWT.BORDER);
                 eventNameBox.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
                 eventNameBox.setBounds(154, 34, 225, 49);
+                
+                // buttons for private, public, and confidential
+                publicButton = new Button(CalendarGUI, SWT.RADIO);
+                publicButton.setBounds(430, 34, 91, 18);
+                publicButton.setText("Public");
+                
+                privateButton = new Button(CalendarGUI, SWT.RADIO);
+                privateButton.setBounds(430, 50, 91, 18);
+                privateButton.setText("Private");
+                
+                confidentialButton = new Button(CalendarGUI, SWT.RADIO);
+                confidentialButton.setBounds(430, 65, 91, 18);
+                confidentialButton.setText("Confidential");
                 
                 // start date label
                 Label lblStartDate = new Label(CalendarGUI, SWT.NONE);
@@ -353,20 +367,6 @@ public class Calendar {
                 eAM.setBounds(0, 4, 49, 16);
                 eAM.setText("AM");
                 
-                lblNewLabel = new Label(CalendarGUI, SWT.NONE);
-                lblNewLabel.setBounds(323, 439, 59, 14);
-                lblNewLabel.setText("New Label");
-            
-                // private and public buttons
-                Button btnPublic = new Button(CalendarGUI, SWT.RADIO);
-                btnPublic.setBounds(430, 34, 91, 18);
-                btnPublic.setText("Public");
-                
-                Button btnPrivate = new Button(CalendarGUI, SWT.RADIO);
-                btnPrivate.setBounds(430, 58, 91, 18);
-                btnPrivate.setText("Private");
-                
-
         }
 
         public void createEvent() {
@@ -412,6 +412,8 @@ public class Calendar {
         System.out.println("Event name: " + eventNameBox.getText().trim());
         System.out.println("Description: " + descripBox.getText().trim());
         System.out.println("Start Date: " + startYear + "-" + (startMonth+1) + "-" + (startDay+1));
+        
+        System.out.println("Priority level: " + priorityIndex+1);
       
         //prints AM/PM
         if(sPM.getSelection())
@@ -548,7 +550,7 @@ public class Calendar {
                         
                         //sets the event priority
                         
-                        event.setPriority(1);
+                      //  event.setPriority(priorityIndex);
                         
                         //sets the geographic location
                         
