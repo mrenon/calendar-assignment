@@ -1,34 +1,4 @@
 import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
-
-import javax.swing.JOptionPane;
-
-import org.eclipse.swt.widgets.Display; 
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.widgets.Button;
-
-import biweekly.Biweekly;
-import biweekly.ICalendar;
-import biweekly.component.VEvent;
-import biweekly.property.DateEnd;
-import biweekly.property.DateStart;
-import biweekly.property.Description;
-import biweekly.property.Summary;
-import biweekly.util.DateTimeComponents;
-import biweekly.util.Duration;
-
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.graphics.Point;
 
 public class Calendar {
 
@@ -45,6 +15,7 @@ public class Calendar {
         private List endMonthList;
         private List endYearList;
         private List endDayList;
+        private List priorityList;
         private Composite startGroupButton;
         private Composite endGroupButton;
         private Button sAM;
@@ -90,7 +61,7 @@ public class Calendar {
                 CalendarGUI.setTouchEnabled(true);
                 CalendarGUI.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 CalendarGUI.setText("Calendar Interface");
-                CalendarGUI.setSize(563, 622);
+                CalendarGUI.setSize(564, 606);
                 CalendarGUI.setEnabled(true);
                 
                 //creates the event label
@@ -224,14 +195,14 @@ public class Calendar {
                 endDayList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
                 endDayList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
                 endDayList.setItems(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14",
-                		"15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"});
+                                "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"});
                 endDayList.setBounds(156, 300, 42, 101);
                 
                 // makes a list of years for END date
                 endYearList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
                 endYearList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
                 endYearList.setItems(new String[] {"2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"
-                		, "2024", "2025", "2026", "2027", "2028", "2029", "2030"});
+                                , "2024", "2025", "2026", "2027", "2028", "2029", "2030"});
                 endYearList.setBounds(223, 300, 57, 100);
                 
                 // end month label
@@ -291,13 +262,26 @@ public class Calendar {
                 Label descripLabel = new Label(CalendarGUI, SWT.NONE);
                 descripLabel.setFont(SWTResourceManager.getFont("Franklin Gothic Medium", 15, SWT.BOLD));
                 descripLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                descripLabel.setBounds(223, 423, 111, 22);
+                descripLabel.setBounds(10, 423, 129, 22);
                 descripLabel.setText("Description");
                 
                 //text field where you can enter a description for the event
                 descripBox = new Text(CalendarGUI, SWT.BORDER);
                 descripBox.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
-                descripBox.setBounds(53, 451, 440, 93);
+                descripBox.setBounds(20, 451, 248, 73);
+                
+               // priority label 
+                Label priorityLabel = new Label(CalendarGUI, SWT.NONE);
+                priorityLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                priorityLabel.setFont(SWTResourceManager.getFont("Franklin Gothic Medium", 15, SWT.BOLD));
+                priorityLabel.setBounds(323, 423, 111, 30);
+                priorityLabel.setText("Priority Level");
+                
+                // priority list where user can choose desired priority level
+                List priorityList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
+                priorityList.setItems(new String[] {"None", "Low", "Medium", "High"});
+                priorityList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
+                priorityList.setBounds(356, 451, 148, 62);
                 
                 Listener openerListener = new Listener() {
                       public void handleEvent(Event event) {
@@ -306,7 +290,8 @@ public class Calendar {
                     };
                 // creates a push button to submit
                 Button pushButton = new Button (CalendarGUI, SWT.BORDER);
-                pushButton.setLocation(218, 550);
+                pushButton.setSize(111, 28);
+                pushButton.setLocation(241, 546);
                 pushButton.setText("Create Event");
                 pushButton.addListener(SWT.Selection, openerListener);
                 pushButton.pack();
@@ -323,6 +308,7 @@ public class Calendar {
                 eAM = new Button(endGroupButton, SWT.RADIO);
                 eAM.setBounds(0, 4, 49, 16);
                 eAM.setText("AM");
+                
 
         }
 
@@ -339,6 +325,8 @@ public class Calendar {
         int tempStartTime= 0; 
         int tempEndTime = 0;
         
+        // variable to store priority selection
+        int priorityIndex = priorityList.getSelectionIndex();
         
         if (yearList.getSelectionIndex() >= 0)
             startYear = Integer.parseInt(yearList.getSelection()[0]);
@@ -388,95 +376,95 @@ public class Calendar {
         try
         {
                 
-        	valid = false;
+                valid = false;
                 
-        	//temp variables to check if event name and description are empty fields
-        	String checkSummary = eventNameBox.getText().trim();
-        	String checkDescrip = descripBox.getText().trim();
+                //temp variables to check if event name and description are empty fields
+                String checkSummary = eventNameBox.getText().trim();
+                String checkDescrip = descripBox.getText().trim();
                 
-        	
-        	/**********************************************
-        	 * if statements to check if data was entered
-        	 *********************************************/
-        	if(checkSummary.isEmpty() || checkDescrip.isEmpty()){ 
-        		JOptionPane.showMessageDialog(null, "Please Enter All Data Fields");
-        	}
-        	else if(startMonth == -1 || startDay == -1 || startYear == -1 || shour == -1 || smin == -1){ //check if there is nothing selected in the start month, day, year, and time
-        		JOptionPane.showMessageDialog(null, "Please Enter All Data Fields"); 
-        	}
-        	else if(endMonth == -1 || endDay == -1 || endYear == -1 || ehour == -1 || emin == -1){ //check if there is nothing selected in the end month, day, year, and time
-        		JOptionPane.showMessageDialog(null, "Please Enter All Data Fields");
-        	}
-        	
-        	/************************************************************************************************
-        	 * if statements to check if the start time (hour, min, year) is before the end time (hour, min, year) 
-        	 ************************************************************************************************/
-        	else if(tempEndTime < tempStartTime) //check if end time is before start time
-        		JOptionPane.showMessageDialog(null, "Bad Hour Input");
-        	else if(tempEndTime > tempStartTime && emin < smin)//create .ics file 
+                
+                /**********************************************
+                 * if statements to check if data was entered
+                 *********************************************/
+                if(checkSummary.isEmpty() || checkDescrip.isEmpty()){ 
+                        JOptionPane.showMessageDialog(null, "Please Enter All Data Fields");
+                }
+                else if(startMonth == -1 || startDay == -1 || startYear == -1 || shour == -1 || smin == -1){ //check if there is nothing selected in the start month, day, year, and time
+                        JOptionPane.showMessageDialog(null, "Please Enter All Data Fields"); 
+                }
+                else if(endMonth == -1 || endDay == -1 || endYear == -1 || ehour == -1 || emin == -1){ //check if there is nothing selected in the end month, day, year, and time
+                        JOptionPane.showMessageDialog(null, "Please Enter All Data Fields");
+                }
+                
+                /************************************************************************************************
+                 * if statements to check if the start time (hour, min, year) is before the end time (hour, min, year) 
+                 ************************************************************************************************/
+                else if(tempEndTime < tempStartTime) //check if end time is before start time
+                        JOptionPane.showMessageDialog(null, "Bad Hour Input");
+                else if(tempEndTime > tempStartTime && emin < smin)//create .ics file 
                 valid = true;
             else if(emin < smin) //check if end time min is before start time min
                 JOptionPane.showMessageDialog(null, "Bad Minute Input");
             else if(endYear < startYear)//check if the end year is before the start year
-            	JOptionPane.showMessageDialog(null, "Bad Year Input");
+                JOptionPane.showMessageDialog(null, "Bad Year Input");
             else if(endMonth <= startMonth){//check if the end month is before the start month
-            	if(endYear < startYear)
-            		JOptionPane.showMessageDialog(null, "Bad Date Input");
-            	else if(endDay < startDay && endYear <= startYear)
-            		JOptionPane.showMessageDialog(null, "Bad Date Input");
-            	else if(endMonth < startMonth)
-            		JOptionPane.showMessageDialog(null, "Bad Date Input");
-            	else
-            		valid = true;
+                if(endYear < startYear)
+                        JOptionPane.showMessageDialog(null, "Bad Date Input");
+                else if(endDay < startDay && endYear <= startYear)
+                        JOptionPane.showMessageDialog(null, "Bad Date Input");
+                else if(endMonth < startMonth)
+                        JOptionPane.showMessageDialog(null, "Bad Date Input");
+                else
+                        valid = true;
             }
-            	
-        	
-        	/**************************************************************
-        	 * if statements to check if the month is correct
-        	 * also to check that the start month is before the end month
-        	 **************************************************************/
-        	//checks for February
+                
+                
+                /**************************************************************
+                 * if statements to check if the month is correct
+                 * also to check that the start month is before the end month
+                 **************************************************************/
+                //checks for February
             else if(startMonth ==  1 &&  startYear %4 == 0){
-            	if(startDay > 28)//it is a leap year for the start date
-            		JOptionPane.showMessageDialog(null, "Start Date Bad Input: It is a leap year, but you cannot enter 30 or 31 on February");
-            	else
-            		valid = true;
+                if(startDay > 28)//it is a leap year for the start date
+                        JOptionPane.showMessageDialog(null, "Start Date Bad Input: It is a leap year, but you cannot enter 30 or 31 on February");
+                else
+                        valid = true;
             }
             else if(endMonth == 1 && endYear %4 == 0){//it is a leap year for the end date
-            	if(endDay > 28)
-            		JOptionPane.showMessageDialog(null, "End Date Bad Input: It is a leap year, but you cannot enter 30 or 31 on February");
-            	else
-            		valid = true;
+                if(endDay > 28)
+                        JOptionPane.showMessageDialog(null, "End Date Bad Input: It is a leap year, but you cannot enter 30 or 31 on February");
+                else
+                        valid = true;
             }
             else if(startDay >= 28 && startMonth == 1 || endMonth == 1 && endDay >= 28) //regular february
-            	JOptionPane.showMessageDialog(null, "Bad Input: It is February, so you cannot enter 29, 30, 31");
-        	
-        	//checks for months that dont have 31 days
+                JOptionPane.showMessageDialog(null, "Bad Input: It is February, so you cannot enter 29, 30, 31");
+                
+                //checks for months that dont have 31 days
             else if(startDay == 30 && startMonth == 3)
-            	JOptionPane.showMessageDialog(null, "Start Date Bad Input: It is April, so you cannot enter 31");
+                JOptionPane.showMessageDialog(null, "Start Date Bad Input: It is April, so you cannot enter 31");
             else if(startDay == 30 && startMonth == 5)
-            	JOptionPane.showMessageDialog(null, "Start Date Bad Input: It is June, so you cannot enter 31");
+                JOptionPane.showMessageDialog(null, "Start Date Bad Input: It is June, so you cannot enter 31");
             else if(startDay == 30 && startMonth == 8)
-            	JOptionPane.showMessageDialog(null, "Start Date Bad Input: It is September, so you cannot enter 31");
+                JOptionPane.showMessageDialog(null, "Start Date Bad Input: It is September, so you cannot enter 31");
             else if(startDay == 30 && startMonth == 10)
-            	JOptionPane.showMessageDialog(null, "Start Date Bad Input: It is November, so you cannot enter 31");
+                JOptionPane.showMessageDialog(null, "Start Date Bad Input: It is November, so you cannot enter 31");
             else if(endDay == 30 && endMonth == 3)
-            	JOptionPane.showMessageDialog(null, "End Date Bad Input: It is April, so you cannot enter 31");
+                JOptionPane.showMessageDialog(null, "End Date Bad Input: It is April, so you cannot enter 31");
             else if(endDay == 30 && endMonth == 5)
-            	JOptionPane.showMessageDialog(null, "End Date Bad Input: It is June, so you cannot enter 31");
+                JOptionPane.showMessageDialog(null, "End Date Bad Input: It is June, so you cannot enter 31");
             else if(endDay == 30 && endMonth == 8)
-            	JOptionPane.showMessageDialog(null, "End Date Bad Input: It is September, so you cannot enter 31");
+                JOptionPane.showMessageDialog(null, "End Date Bad Input: It is September, so you cannot enter 31");
             else if(endDay == 30 && endMonth == 10)
-            	JOptionPane.showMessageDialog(null, "End Date Bad Input: It is November, so you cannot enter 31");
+                JOptionPane.showMessageDialog(null, "End Date Bad Input: It is November, so you cannot enter 31");
             
-        	
-        	//passed all the tests ready for .ics file creation
+                
+                //passed all the tests ready for .ics file creation
             else
                 valid = true;
 
-        	/**********************
-        	 * .ics file creation
-        	 **********************/
+                /**********************
+                 * .ics file creation
+                 **********************/
                 if(valid == true){
                         //New calendar object
             
