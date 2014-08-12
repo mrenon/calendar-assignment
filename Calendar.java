@@ -20,9 +20,12 @@ import org.eclipse.swt.widgets.Button;
 import biweekly.Biweekly;
 import biweekly.ICalendar;
 import biweekly.component.VEvent;
+import biweekly.component.VTimezone;
+import biweekly.property.Classification;
 import biweekly.property.DateEnd;
 import biweekly.property.DateStart;
 import biweekly.property.Description;
+import biweekly.property.Geo;
 import biweekly.property.Summary;
 import biweekly.util.DateTimeComponents;
 import biweekly.util.Duration;
@@ -515,6 +518,26 @@ public class Calendar {
                 
                         TimeZone currentZone = TimeZone.getTimeZone("America/Hawaii");
                         Locale currentLocale = Locale.ENGLISH;
+                        
+                        //sets the classification of the event
+                        
+                        event.setClassification(Classification.public_());
+                        
+                        //sets the event priority
+                        
+                        event.setPriority(1);
+                        
+                        //sets the geographic location
+                        
+                        Geo location = new Geo(40.714623,-74.006605);                
+                        
+                        event.setGeo(location);
+                        
+                        //sets the timezone
+                        
+                        VTimezone timezone = new VTimezone("America/Hawaii");
+                        
+                        calendar.addTimezone(timezone);
             
                         DateTimeComponents components = new DateTimeComponents(2014, 07, 28, 15, 0, 0, false);
             
