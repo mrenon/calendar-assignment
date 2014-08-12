@@ -32,6 +32,8 @@ import biweekly.util.Duration;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class Calendar {
 
@@ -66,6 +68,9 @@ public class Calendar {
         private boolean yearValid;
         private boolean timeValid;
         private boolean textValid;
+        private Label coordLabel;
+        private Text latitudeText;
+        private Text longitudeText;
         
         
 
@@ -106,7 +111,7 @@ public class Calendar {
                 CalendarGUI.setTouchEnabled(true);
                 CalendarGUI.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 CalendarGUI.setText("Calendar Interface");
-                CalendarGUI.setSize(564, 606);
+                CalendarGUI.setSize(787, 629);
                 CalendarGUI.setEnabled(true);
                 
                 //creates the event label
@@ -120,11 +125,12 @@ public class Calendar {
                 //creates a text field where you can enter the event's name
                 eventNameBox = new Text(CalendarGUI, SWT.BORDER);
                 eventNameBox.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
-                eventNameBox.setBounds(154, 34, 225, 49);
+                eventNameBox.setBounds(154, 34, 274, 49);
                 
                 //holds the private, public, and confidential buttons in a group
                 setStatusButtonGroup = new Composite(CalendarGUI, SWT.NONE);
-                setStatusButtonGroup.setBounds(430, 34, 91, 49);
+                setStatusButtonGroup.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                setStatusButtonGroup.setBounds(599, 105, 91, 65);
                 
                 // buttons for private, public, and confidential
                 publicButton = new Button(setStatusButtonGroup, SWT.RADIO);
@@ -133,11 +139,11 @@ public class Calendar {
                 publicButton.setText("Public");
                 
                 privateButton = new Button(setStatusButtonGroup, SWT.RADIO);
-                privateButton.setBounds(0, 16, 91, 18);
+                privateButton.setBounds(0, 23, 91, 18);
                 privateButton.setText("Private");
                 
                 confidentialButton = new Button(setStatusButtonGroup, SWT.RADIO);
-                confidentialButton.setBounds(0, 31, 91, 18);
+                confidentialButton.setBounds(0, 47, 91, 18);
                 confidentialButton.setText("Confidential");
                 
                 // start date label
@@ -337,7 +343,7 @@ public class Calendar {
                 Label priorityLabel = new Label(CalendarGUI, SWT.NONE);
                 priorityLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 priorityLabel.setFont(SWTResourceManager.getFont("Franklin Gothic Medium", 15, SWT.BOLD));
-                priorityLabel.setBounds(323, 423, 111, 30);
+                priorityLabel.setBounds(323, 423, 148, 30);
                 priorityLabel.setText("Priority Level");
                 
                // description for priority level
@@ -351,7 +357,7 @@ public class Calendar {
                 priorityList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
                 priorityList.setItems(new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"});
                 priorityList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
-                priorityList.setBounds(342, 475, 148, 49);
+                priorityList.setBounds(342, 475, 159, 49);
                 
                 Listener openerListener = new Listener() {
                       public void handleEvent(Event event) {
@@ -360,7 +366,7 @@ public class Calendar {
                     };
                 // creates a push button to submit
                 Button pushButton = new Button (CalendarGUI, SWT.BORDER);
-                pushButton.setSize(111, 28);
+                pushButton.setSize(161, 29);
                 pushButton.setLocation(241, 546);
                 pushButton.setText("Create Event");
                 pushButton.addListener(SWT.Selection, openerListener);
@@ -378,6 +384,57 @@ public class Calendar {
                 eAM = new Button(endGroupButton, SWT.RADIO);
                 eAM.setBounds(0, 4, 49, 16);
                 eAM.setText("AM");
+                
+                Label eventStatusLabel = new Label(CalendarGUI, SWT.NONE);
+                eventStatusLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                eventStatusLabel.setBounds(608, 78, 66, 15);
+                eventStatusLabel.setText("Event Status");
+                
+                Composite recureEventButGrp = new Composite(CalendarGUI, SWT.NONE);
+                recureEventButGrp.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                recureEventButGrp.setBounds(599, 475, 74, 38);
+                
+                Button yesRecurrButton = new Button(recureEventButGrp, SWT.RADIO);
+                yesRecurrButton.setBounds(0, 0, 90, 16);
+                yesRecurrButton.addSelectionListener(new SelectionAdapter() {
+                	@Override
+                	public void widgetSelected(SelectionEvent e) {
+                	}
+                });
+                yesRecurrButton.setText("YES");
+                
+                Button noRecurrButton = new Button(recureEventButGrp, SWT.RADIO);
+                noRecurrButton.setSelection(true);
+                noRecurrButton.setBounds(0, 22, 90, 16);
+                noRecurrButton.setText("NO");
+                
+                Label recureLabel = new Label(CalendarGUI, SWT.NONE);
+                recureLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                recureLabel.setBounds(599, 451, 74, 15);
+                recureLabel.setText("Recure Event");
+                
+                coordLabel = new Label(CalendarGUI, SWT.NONE);
+                coordLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                coordLabel.setBounds(569, 233, 142, 15);
+                coordLabel.setText("Geographical Coordinates");
+                
+                latitudeText = new Text(CalendarGUI, SWT.BORDER);
+                latitudeText.setText("-74.006605");
+                latitudeText.setBounds(584, 278, 127, 21);
+                
+                longitudeText = new Text(CalendarGUI, SWT.BORDER);
+                longitudeText.setText("40.714623");
+                longitudeText.setBounds(584, 254, 127, 21);
+                
+                Label longitudeLabel = new Label(CalendarGUI, SWT.NONE);
+                longitudeLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                longitudeLabel.setBounds(498, 254, 57, 15);
+                longitudeLabel.setText("Longitude");
+                
+                Label latitudeLabel = new Label(CalendarGUI, SWT.NONE);
+                latitudeLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                latitudeLabel.setText("Latitude");
+                latitudeLabel.setBounds(509, 281, 57, 15);
                 
         }
 
