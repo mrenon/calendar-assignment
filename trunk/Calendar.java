@@ -55,7 +55,11 @@ public class Calendar {
         private Button sPM;
         private Button eAM;
         private Button ePM;
+        private Button btnPrivate;
+        private Button btnPublic;
         private boolean valid;
+        private Label lblNewLabel;
+        private Label priorityDescriptionLabel;
 
         /**
          * Launch the application.
@@ -108,7 +112,7 @@ public class Calendar {
                 //creates a text field where you can enter the event's name
                 eventNameBox = new Text(CalendarGUI, SWT.BORDER);
                 eventNameBox.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
-                eventNameBox.setBounds(154, 34, 248, 49);
+                eventNameBox.setBounds(154, 34, 225, 49);
                 
                 // start date label
                 Label lblStartDate = new Label(CalendarGUI, SWT.NONE);
@@ -310,11 +314,18 @@ public class Calendar {
                 priorityLabel.setBounds(323, 423, 111, 30);
                 priorityLabel.setText("Priority Level");
                 
+               // description for priority level
+                priorityDescriptionLabel = new Label(CalendarGUI, SWT.NONE);
+                priorityDescriptionLabel.setFont(SWTResourceManager.getFont("Lucida Grande", 11, SWT.ITALIC));
+                priorityDescriptionLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                priorityDescriptionLabel.setBounds(342, 451, 139, 18);
+                priorityDescriptionLabel.setText("\"0- lowest, 9- highest\"");
+                
                 // priority list where user can choose desired priority level
                 List priorityList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
-                priorityList.setItems(new String[] {"None", "Low", "Medium", "High"});
+                priorityList.setItems(new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"});
                 priorityList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
-                priorityList.setBounds(356, 451, 148, 62);
+                priorityList.setBounds(342, 475, 148, 49);
                 
                 Listener openerListener = new Listener() {
                       public void handleEvent(Event event) {
@@ -341,6 +352,19 @@ public class Calendar {
                 eAM = new Button(endGroupButton, SWT.RADIO);
                 eAM.setBounds(0, 4, 49, 16);
                 eAM.setText("AM");
+                
+                lblNewLabel = new Label(CalendarGUI, SWT.NONE);
+                lblNewLabel.setBounds(323, 439, 59, 14);
+                lblNewLabel.setText("New Label");
+            
+                // private and public buttons
+                Button btnPublic = new Button(CalendarGUI, SWT.RADIO);
+                btnPublic.setBounds(430, 34, 91, 18);
+                btnPublic.setText("Public");
+                
+                Button btnPrivate = new Button(CalendarGUI, SWT.RADIO);
+                btnPrivate.setBounds(430, 58, 91, 18);
+                btnPrivate.setText("Private");
                 
 
         }
@@ -402,7 +426,6 @@ public class Calendar {
                 System.out.println("End Time: " + ehour + ":" + emin + "PM");
         else
                 System.out.println("End Time: " + ehour + ":" + emin + "AM");
-        
         
         
         
