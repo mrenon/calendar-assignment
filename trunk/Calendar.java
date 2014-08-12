@@ -71,6 +71,10 @@ public class Calendar {
         private Label coordLabel;
         private Text latitudeText;
         private Text longitudeText;
+        private Composite recureEventButGrp;
+        private Button yesRecurrButton;
+        private Button noRecurrButton;
+        private List recureList;
         
         
 
@@ -127,6 +131,12 @@ public class Calendar {
                 eventNameBox.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
                 eventNameBox.setBounds(154, 34, 274, 49);
                 
+                //status of the event label
+                Label eventStatusLabel = new Label(CalendarGUI, SWT.NONE);
+                eventStatusLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                eventStatusLabel.setBounds(608, 78, 66, 15);
+                eventStatusLabel.setText("Event Status");
+                
                 //holds the private, public, and confidential buttons in a group
                 setStatusButtonGroup = new Composite(CalendarGUI, SWT.NONE);
                 setStatusButtonGroup.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
@@ -134,15 +144,36 @@ public class Calendar {
                 
                 // buttons for private, public, and confidential
                 publicButton = new Button(setStatusButtonGroup, SWT.RADIO);
+                publicButton.addSelectionListener(new SelectionAdapter() {
+                	@Override
+                	public void widgetSelected(SelectionEvent e) {
+                		//action listener saying that PUBLIC was selected
+                		//put code here	
+                	}
+                });
                 publicButton.setBounds(0, 0, 91, 18);
                 publicButton.setSelection(true);
                 publicButton.setText("Public");
                 
                 privateButton = new Button(setStatusButtonGroup, SWT.RADIO);
+                privateButton.addSelectionListener(new SelectionAdapter() {
+                	@Override
+                	public void widgetSelected(SelectionEvent e) {
+                		//action listener saying that PRIVATE was selected
+                		//put code here	
+                	}
+                });
                 privateButton.setBounds(0, 23, 91, 18);
                 privateButton.setText("Private");
                 
                 confidentialButton = new Button(setStatusButtonGroup, SWT.RADIO);
+                confidentialButton.addSelectionListener(new SelectionAdapter() {
+                	@Override
+                	public void widgetSelected(SelectionEvent e) {
+                		//action listener saying that CONFIDENTIAL was selected
+                		//put code here	
+                	}
+                });
                 confidentialButton.setBounds(0, 47, 91, 18);
                 confidentialButton.setText("Confidential");
                 
@@ -161,7 +192,6 @@ public class Calendar {
                 monthLabel.setText("Month");
                 
                 //makes a list of the months that you can select from for START date
-                
                 monthList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL); //creates a list
                 monthList.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK)); //sets the font color
                 monthList.setTouchEnabled(true); 
@@ -286,7 +316,7 @@ public class Calendar {
                 endDayLabel.setBounds(165, 281, 20, 14);
                 endDayLabel.setText("Day");
                 
-               // end year label
+                //end year label
                 Label endYearLabel = new Label(CalendarGUI, SWT.NONE);
                 endYearLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 endYearLabel.setBounds(228, 281, 36, 14);
@@ -339,21 +369,21 @@ public class Calendar {
                 descripBox.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
                 descripBox.setBounds(20, 451, 248, 73);
                 
-               // priority label 
+                //priority label 
                 Label priorityLabel = new Label(CalendarGUI, SWT.NONE);
                 priorityLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 priorityLabel.setFont(SWTResourceManager.getFont("Franklin Gothic Medium", 15, SWT.BOLD));
                 priorityLabel.setBounds(323, 423, 148, 30);
                 priorityLabel.setText("Priority Level");
                 
-               // description for priority level
+                //description for priority level
                 priorityDescriptionLabel = new Label(CalendarGUI, SWT.NONE);
                 priorityDescriptionLabel.setFont(SWTResourceManager.getFont("Lucida Grande", 11, SWT.ITALIC));
                 priorityDescriptionLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 priorityDescriptionLabel.setBounds(342, 451, 139, 18);
                 priorityDescriptionLabel.setText("\"0- lowest, 9- highest\"");
                 
-                // priority list where user can choose desired priority level
+                //priority list where user can choose desired priority level
                 priorityList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
                 priorityList.setItems(new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"});
                 priorityList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
@@ -364,6 +394,7 @@ public class Calendar {
                         createEvent();
                       }
                     };
+                    
                 // creates a push button to submit
                 Button pushButton = new Button (CalendarGUI, SWT.BORDER);
                 pushButton.setSize(161, 29);
@@ -372,6 +403,7 @@ public class Calendar {
                 pushButton.addListener(SWT.Selection, openerListener);
                 pushButton.pack();
                 
+                //button group to hold end dates AM and PM button
                 endGroupButton = new Composite(CalendarGUI, SWT.NONE);
                 endGroupButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 endGroupButton.setBounds(472, 330, 49, 42);
@@ -385,32 +417,10 @@ public class Calendar {
                 eAM.setBounds(0, 4, 49, 16);
                 eAM.setText("AM");
                 
-                Label eventStatusLabel = new Label(CalendarGUI, SWT.NONE);
-                eventStatusLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                eventStatusLabel.setBounds(608, 78, 66, 15);
-                eventStatusLabel.setText("Event Status");
-                
-                Composite recureEventButGrp = new Composite(CalendarGUI, SWT.NONE);
-                recureEventButGrp.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                recureEventButGrp.setBounds(599, 475, 74, 38);
-                
-                Button yesRecurrButton = new Button(recureEventButGrp, SWT.RADIO);
-                yesRecurrButton.setBounds(0, 0, 90, 16);
-                yesRecurrButton.addSelectionListener(new SelectionAdapter() {
-                	@Override
-                	public void widgetSelected(SelectionEvent e) {
-                	}
-                });
-                yesRecurrButton.setText("YES");
-                
-                Button noRecurrButton = new Button(recureEventButGrp, SWT.RADIO);
-                noRecurrButton.setSelection(true);
-                noRecurrButton.setBounds(0, 22, 90, 16);
-                noRecurrButton.setText("NO");
-                
+                //recure event label
                 Label recureLabel = new Label(CalendarGUI, SWT.NONE);
                 recureLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                recureLabel.setBounds(599, 451, 74, 15);
+                recureLabel.setBounds(530, 430, 74, 15);
                 recureLabel.setText("Recure Event");
                 
                 coordLabel = new Label(CalendarGUI, SWT.NONE);
@@ -436,6 +446,40 @@ public class Calendar {
                 latitudeLabel.setText("Latitude");
                 latitudeLabel.setBounds(509, 281, 57, 15);
                 
+                recureList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
+                recureList.setEnabled(false);  
+                recureList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
+                recureList.setItems(new String[] {"Daily", "Weekly", "Monthly", "Yearly"});
+                recureList.setBounds(634, 456, 100, 49);
+                
+                recureEventButGrp = new Composite(CalendarGUI, SWT.NONE);
+                recureEventButGrp.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                recureEventButGrp.setBounds(541, 453, 74, 41);
+                
+                yesRecurrButton = new Button(recureEventButGrp, SWT.RADIO);
+                yesRecurrButton.addSelectionListener(new SelectionAdapter() {
+                	@Override
+                	public void widgetSelected(SelectionEvent e) {
+                		recureList.setEnabled(true);
+                		//recure button was SELECTED add code here for 
+                		//recurrence event ..i think
+                		
+                	}
+                });
+                yesRecurrButton.setBounds(0, 0, 74, 16);
+                yesRecurrButton.setText("YES");
+                
+                noRecurrButton = new Button(recureEventButGrp, SWT.RADIO);
+                noRecurrButton.addSelectionListener(new SelectionAdapter() {
+                	@Override
+                	public void widgetSelected(SelectionEvent e) {
+                		recureList.setEnabled(false);
+                		//recure button was NOT SELECTED 
+                	}
+                });
+                noRecurrButton.setBounds(0, 25, 74, 16);
+                noRecurrButton.setSelection(true);
+                noRecurrButton.setText("NO");
         }
 
         public void createEvent() {
@@ -453,6 +497,9 @@ public class Calendar {
         
         // variable to store priority selection
         int priorityIndex = priorityList.getSelectionIndex();
+        
+        //variable to store the recurrence selection
+        int recureIndex = recureList.getSelectionIndex();
         
         if (yearList.getSelectionIndex() >= 0)
             startYear = Integer.parseInt(yearList.getSelection()[0]);
