@@ -81,6 +81,7 @@ public class Calendar {
         private List recureList;
         private Text latitudeBox;
         private Text longitudeBox;
+        private Text timezoneText;
         
         
 
@@ -157,7 +158,7 @@ public class Calendar {
                                 //put code here 
                         }
                 });
-                publicButton.setBounds(0, 0, 91, 18);
+                publicButton.setBounds(0, 0, 103, 18);
                 publicButton.setSelection(true);
                 publicButton.setText("Public");
                 
@@ -169,7 +170,7 @@ public class Calendar {
                                 //put code here 
                         }
                 });
-                privateButton.setBounds(0, 23, 91, 18);
+                privateButton.setBounds(0, 23, 103, 18);
                 privateButton.setText("Private");
                 
                 confidentialButton = new Button(setStatusButtonGroup, SWT.RADIO);
@@ -436,21 +437,30 @@ public class Calendar {
                 
                 latitudeText = new Text(CalendarGUI, SWT.BORDER);
                 latitudeText.setText("-74.006605");
-                latitudeText.setBounds(584, 342, 127, 21);
+                latitudeText.setBounds(584, 380, 127, 21);
                 
                 longitudeText = new Text(CalendarGUI, SWT.BORDER);
                 longitudeText.setText("40.714623");
-                longitudeText.setBounds(584, 311, 127, 21);
+                longitudeText.setBounds(584, 351, 127, 21);
                 
                 Label longitudeLabel = new Label(CalendarGUI, SWT.NONE);
                 longitudeLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                longitudeLabel.setBounds(521, 314, 57, 15);
+                longitudeLabel.setBounds(519, 357, 57, 15);
                 longitudeLabel.setText("Longitude");
                 
                 Label latitudeLabel = new Label(CalendarGUI, SWT.NONE);
                 latitudeLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 latitudeLabel.setText("Latitude");
-                latitudeLabel.setBounds(519, 345, 57, 15);
+                latitudeLabel.setBounds(519, 386, 57, 15);
+                
+                Label timezoneLabel = new Label(CalendarGUI, SWT.NONE);
+                timezoneLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+                timezoneLabel.setBounds(519, 330, 55, 15);
+                timezoneLabel.setText("Timezone");
+                
+                timezoneText = new Text(CalendarGUI, SWT.BORDER);
+                timezoneText.setText("Hawaii");
+                timezoneText.setBounds(584, 324, 127, 21);
                 
                 recureList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
                 recureList.setEnabled(false);  
@@ -548,15 +558,15 @@ public class Calendar {
         
         if (privateButton.getSelection())
         {
-        	System.out.println("Classification: Private");
+                System.out.println("Classification: Private");
         }
         else if (publicButton.getSelection())
         {
-        	System.out.println("Classification: Public");
+                System.out.println("Classification: Public");
         }
         else if (confidentialButton.getSelection())
         {
-        	System.out.println("Classification: Confidential");
+                System.out.println("Classification: Confidential");
         }
         
         //prints AM/PM
@@ -594,7 +604,7 @@ public class Calendar {
                  * if statements to check if data was entered
                  *********************************************/
                 if(checkSummary.isEmpty() || checkDescrip.isEmpty()){ 
-                	
+                        
                      MessageBox emptyDescrip = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                 
                      emptyDescrip.setText("Error");
                      emptyDescrip.setMessage("Please Enter All Data Fields");
@@ -826,15 +836,15 @@ public class Calendar {
                         
                         if (privateButton.getSelection())
                         {
-                        	event.setClassification(Classification.private_());
+                                event.setClassification(Classification.private_());
                         }
                         else if (publicButton.getSelection())
                         {
-                        	event.setClassification(Classification.public_());
+                                event.setClassification(Classification.public_());
                         }
                         else if (confidentialButton.getSelection())
                         {
-                        	event.setClassification(Classification.confidential());
+                                event.setClassification(Classification.confidential());
                         }
                         
                         //sets the event priority
@@ -878,24 +888,24 @@ public class Calendar {
                         //creates the recurrence rule if the user specifies for the event to occur
             
                         if(recureIndex == 0){
-                        	
-                        	Recurrence recur = new Recurrence.Builder(Frequency.DAILY).build();
-                        	event.setRecurrenceRule(recur);
-                        	
+                                
+                                Recurrence recur = new Recurrence.Builder(Frequency.DAILY).build();
+                                event.setRecurrenceRule(recur);
+                                
                         }
                         
                         else if(recureIndex == 1){
-                        	
-                        	Recurrence recur = new Recurrence.Builder(Frequency.WEEKLY).build();
-                        	event.setRecurrenceRule(recur);
-                        	
+                                
+                                Recurrence recur = new Recurrence.Builder(Frequency.WEEKLY).build();
+                                event.setRecurrenceRule(recur);
+                                
                         }
                         
                         else if(recureIndex == 2){
-                        	
-                        	Recurrence recur = new Recurrence.Builder(Frequency.MONTHLY).build();
-                        	event.setRecurrenceRule(recur);
-                        	
+                                
+                                Recurrence recur = new Recurrence.Builder(Frequency.MONTHLY).build();
+                                event.setRecurrenceRule(recur);
+                                
                         }
             
                         calendar.addEvent(event);
