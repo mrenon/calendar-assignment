@@ -25,9 +25,13 @@ import biweekly.property.DateEnd;
 import biweekly.property.DateStart;
 import biweekly.property.Description;
 import biweekly.property.Geo;
+import biweekly.property.ProductId;
 import biweekly.property.Summary;
+import biweekly.property.Version;
 import biweekly.util.DateTimeComponents;
 import biweekly.util.Duration;
+import biweekly.util.Recurrence;
+import biweekly.util.Recurrence.Frequency;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.graphics.Point;
@@ -857,13 +861,36 @@ public class Calendar {
                         
                         DateEnd endDate = new DateEnd(null, false);
                         endDate = new DateEnd(components);
+                        
+                        //creates the recurrence rule if the user specifies for the event to occur
             
-            
-                        //adds the duration of the event
-            
-                        event.setDuration(new Duration.Builder().minutes(30).build());
+                        if(recureIndex == 0){
+                        	
+                        	Recurrence recur = new Recurrence.Builder(Frequency.DAILY).build();
+                        	event.setRecurrenceRule(recur);
+                        	
+                        }
+                        
+                        else if(recureIndex == 1){
+                        	
+                        	Recurrence recur = new Recurrence.Builder(Frequency.WEEKLY).build();
+                        	event.setRecurrenceRule(recur);
+                        	
+                        }
+                        
+                        else if(recureIndex == 2){
+                        	
+                        	Recurrence recur = new Recurrence.Builder(Frequency.MONTHLY).build();
+                        	event.setRecurrenceRule(recur);
+                        	
+                        }
             
                         calendar.addEvent(event);
+                        
+                        //changes the product ID
+                        
+                        ProductId prodid = new ProductId("-//Team Euphrates//ICS 314 Calendar//EN");
+                        calendar.setProductId(prodid);
             
                         //outputs all information to a .ics file
                         
