@@ -525,6 +525,10 @@ public class Calendar {
         
         double latitude = Double.parseDouble((latitudeText.getText().trim()));
         
+        //timezone variable
+        
+        String timezoneName = timezoneText.getText().trim();
+        
         
         if (yearList.getSelectionIndex() >= 0)
             startYear = Integer.parseInt(yearList.getSelection()[0]);
@@ -859,7 +863,7 @@ public class Calendar {
                         
                         //sets the timezone
                         
-                        VTimezone timezone = new VTimezone("America/Hawaii");
+                        VTimezone timezone = new VTimezone(timezoneName);
                         
                         calendar.addTimezone(timezone);
             
