@@ -529,7 +529,20 @@ public class Calendar {
         System.out.println("Start Date: " + startYear + "-" + (startMonth+1) + "-" + (startDay+1));
         
         System.out.println("Priority level: " + priorityIndex);
-      
+        
+        if (privateButton.getSelection())
+        {
+        	System.out.println("Classification: Private");
+        }
+        else if (publicButton.getSelection())
+        {
+        	System.out.println("Classification: Public");
+        }
+        else if (confidentialButton.getSelection())
+        {
+        	System.out.println("Classification: Confidential");
+        }
+        
         //prints AM/PM
         if(sPM.getSelection())
                 System.out.println("Start Time: " + shour + ":" + smin + "PM");
@@ -794,7 +807,18 @@ public class Calendar {
                         
                         //sets the classification of the event
                         
-                        event.setClassification(Classification.public_());
+                        if (privateButton.getSelection())
+                        {
+                        	event.setClassification(Classification.private_());
+                        }
+                        else if (publicButton.getSelection())
+                        {
+                        	event.setClassification(Classification.public_());
+                        }
+                        else if (confidentialButton.getSelection())
+                        {
+                        	event.setClassification(Classification.confidential());
+                        }
                         
                         //sets the event priority
                         
