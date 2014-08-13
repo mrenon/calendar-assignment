@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.regex.Pattern;
 
 import org.eclipse.swt.widgets.Display; 
 import org.eclipse.swt.widgets.Event;
@@ -78,6 +79,8 @@ public class Calendar {
         private Button yesRecurrButton;
         private Button noRecurrButton;
         private List recureList;
+        private Text latitudeBox;
+        private Text longitudeBox;
         
         
 
@@ -504,6 +507,15 @@ public class Calendar {
         //variable to store the recurrence selection
         int recureIndex = recureList.getSelectionIndex();
         
+        //longitude
+        
+        double longitude = Double.parseDouble((longitudeText.getText().trim()));
+        
+        //latitude
+        
+        double latitude = Double.parseDouble((latitudeText.getText().trim()));
+        
+        
         if (yearList.getSelectionIndex() >= 0)
             startYear = Integer.parseInt(yearList.getSelection()[0]);
         if (endYearList.getSelectionIndex() >= 0)
@@ -782,6 +794,7 @@ public class Calendar {
                 }
                 
                 
+                
                 //passed all the tests ready for .ics file creation
                 else
                     dayNumValid = true;
@@ -830,7 +843,7 @@ public class Calendar {
                         
                         //sets the geographic location
                         
-                        Geo location = new Geo(40.714623,-74.006605);                
+                        Geo location = new Geo(latitude,longitude);                
                         
                         event.setGeo(location);
                         
