@@ -445,7 +445,7 @@ public class Calendar {
                 
                 Label longitudeLabel = new Label(CalendarGUI, SWT.NONE);
                 longitudeLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                longitudeLabel.setBounds(519, 357, 57, 15);
+                longitudeLabel.setBounds(519, 357, 66, 15);
                 longitudeLabel.setText("Longitude");
                 
                 Label latitudeLabel = new Label(CalendarGUI, SWT.NONE);
@@ -455,11 +455,11 @@ public class Calendar {
                 
                 Label timezoneLabel = new Label(CalendarGUI, SWT.NONE);
                 timezoneLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                timezoneLabel.setBounds(519, 330, 55, 15);
+                timezoneLabel.setBounds(519, 330, 59, 15);
                 timezoneLabel.setText("Timezone");
                 
                 timezoneText = new Text(CalendarGUI, SWT.BORDER);
-                timezoneText.setText("Hawaii");
+                timezoneText.setText("America/Hawaii");
                 timezoneText.setBounds(584, 324, 127, 21);
                 
                 recureList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
@@ -638,7 +638,7 @@ public class Calendar {
                 {
                     MessageBox badHour = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
                     badHour.setText("Error");
-                    badHour.setMessage("Bad Hour Input");
+                    badHour.setMessage("Bad Hour Input: Check start & end times");
                     badHour.open();
                 }
                 else if(tempEndTime > tempStartTime && emin < smin)//create .ics file 
