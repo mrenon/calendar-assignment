@@ -379,8 +379,8 @@ public class Calendar {
                 priorityDescriptionLabel = new Label(CalendarGUI, SWT.NONE);
                 priorityDescriptionLabel.setFont(SWTResourceManager.getFont("Lucida Grande", 11, SWT.ITALIC));
                 priorityDescriptionLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                priorityDescriptionLabel.setBounds(323, 451, 139, 18);
-                priorityDescriptionLabel.setText("\"0- lowest, 9- highest\"");
+                priorityDescriptionLabel.setBounds(305, 454, 196, 18);
+                priorityDescriptionLabel.setText("\"0- none, 1- highest, 9- lowest\"");
                 
                 //priority list where user can choose desired priority level
                 priorityList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
