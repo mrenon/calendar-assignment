@@ -4,11 +4,10 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import javax.swing.JOptionPane;
-
 import org.eclipse.swt.widgets.Display; 
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.SWT;
@@ -115,7 +114,7 @@ public class Calendar {
                 CalendarGUI.setTouchEnabled(true);
                 CalendarGUI.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 CalendarGUI.setText("Calendar Interface");
-                CalendarGUI.setSize(787, 629);
+                CalendarGUI.setSize(743, 625);
                 CalendarGUI.setEnabled(true);
                 
                 //creates the event label
@@ -123,33 +122,33 @@ public class Calendar {
                 eventNameLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 eventNameLabel.setAlignment(SWT.CENTER);
                 eventNameLabel.setFont(SWTResourceManager.getFont("Franklin Gothic Medium", 15, SWT.BOLD));
-                eventNameLabel.setBounds(223, 10, 94, 22);
+                eventNameLabel.setBounds(306, 10, 125, 22);
                 eventNameLabel.setText("Event Name");
                 
                 //creates a text field where you can enter the event's name
                 eventNameBox = new Text(CalendarGUI, SWT.BORDER);
                 eventNameBox.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
-                eventNameBox.setBounds(154, 34, 274, 49);
+                eventNameBox.setBounds(233, 38, 274, 49);
                 
                 //status of the event label
                 Label eventStatusLabel = new Label(CalendarGUI, SWT.NONE);
                 eventStatusLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                eventStatusLabel.setBounds(608, 78, 66, 15);
+                eventStatusLabel.setBounds(584, 116, 76, 15);
                 eventStatusLabel.setText("Event Status");
                 
                 //holds the private, public, and confidential buttons in a group
                 setStatusButtonGroup = new Composite(CalendarGUI, SWT.NONE);
                 setStatusButtonGroup.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                setStatusButtonGroup.setBounds(599, 105, 91, 65);
+                setStatusButtonGroup.setBounds(569, 145, 100, 65);
                 
                 // buttons for private, public, and confidential
                 publicButton = new Button(setStatusButtonGroup, SWT.RADIO);
                 publicButton.addSelectionListener(new SelectionAdapter() {
-                	@Override
-                	public void widgetSelected(SelectionEvent e) {
-                		//action listener saying that PUBLIC was selected
-                		//put code here	
-                	}
+                        @Override
+                        public void widgetSelected(SelectionEvent e) {
+                                //action listener saying that PUBLIC was selected
+                                //put code here 
+                        }
                 });
                 publicButton.setBounds(0, 0, 91, 18);
                 publicButton.setSelection(true);
@@ -157,24 +156,24 @@ public class Calendar {
                 
                 privateButton = new Button(setStatusButtonGroup, SWT.RADIO);
                 privateButton.addSelectionListener(new SelectionAdapter() {
-                	@Override
-                	public void widgetSelected(SelectionEvent e) {
-                		//action listener saying that PRIVATE was selected
-                		//put code here	
-                	}
+                        @Override
+                        public void widgetSelected(SelectionEvent e) {
+                                //action listener saying that PRIVATE was selected
+                                //put code here 
+                        }
                 });
                 privateButton.setBounds(0, 23, 91, 18);
                 privateButton.setText("Private");
                 
                 confidentialButton = new Button(setStatusButtonGroup, SWT.RADIO);
                 confidentialButton.addSelectionListener(new SelectionAdapter() {
-                	@Override
-                	public void widgetSelected(SelectionEvent e) {
-                		//action listener saying that CONFIDENTIAL was selected
-                		//put code here	
-                	}
+                        @Override
+                        public void widgetSelected(SelectionEvent e) {
+                                //action listener saying that CONFIDENTIAL was selected
+                                //put code here 
+                        }
                 });
-                confidentialButton.setBounds(0, 47, 91, 18);
+                confidentialButton.setBounds(0, 47, 103, 18);
                 confidentialButton.setText("Confidential");
                 
                 // start date label
@@ -240,19 +239,19 @@ public class Calendar {
                 //hour label for start time
                 Label sHourLabel = new Label(CalendarGUI, SWT.SHADOW_IN);
                 sHourLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                sHourLabel.setBounds(356, 145, 31, 15);
+                sHourLabel.setBounds(323, 152, 31, 15);
                 sHourLabel.setText("Hour");
                 
                 //creates the list for the start time's hour
                 startHourList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL); //creates the list
                 startHourList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW)); //background color
                 startHourList.setItems(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}); //entries based on 24-hours
-                startHourList.setBounds(356, 166, 46, 37); //position
+                startHourList.setBounds(323, 173, 46, 37); //position
                 
                 //minutes label for start time
                 Label sMinLabel = new Label(CalendarGUI, SWT.SHADOW_IN);
                 sMinLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                sMinLabel.setBounds(422, 145, 44, 15);
+                sMinLabel.setBounds(387, 152, 44, 15);
                 sMinLabel.setText("Minutes");
                 
                 //creates the list for the start time's minutes
@@ -262,11 +261,11 @@ public class Calendar {
                                 "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", 
                                 "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", 
                                 "52", "53", "54", "55", "56", "57", "58", "59"}); //entries
-                startMinList.setBounds(422, 166, 44, 37);
+                startMinList.setBounds(397, 173, 44, 37);
                 
                 startGroupButton = new Composite(CalendarGUI, SWT.NONE);
                 startGroupButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                startGroupButton.setBounds(472, 166, 49, 42);
+                startGroupButton.setBounds(452, 173, 49, 42);
                 
                 sAM = new Button(startGroupButton, SWT.RADIO);
                 sAM.setSelection(true);
@@ -334,19 +333,19 @@ public class Calendar {
                 Label eHourLabel = new Label(CalendarGUI, SWT.SHADOW_IN);
                 eHourLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 eHourLabel.setText("Hour");
-                eHourLabel.setBounds(342, 314, 31, 15);
+                eHourLabel.setBounds(323, 314, 31, 15);
                 
                 //creates the list for the end time's hours
                 endHourList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL); //creates the list
                 endHourList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));  //background color
                 endHourList.setItems(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}); //entries
-                endHourList.setBounds(342, 335, 46, 37); //position
+                endHourList.setBounds(323, 335, 46, 37); //position
                 
                 //end time's minutes label
                 Label eMinLabel = new Label(CalendarGUI, SWT.SHADOW_IN);
                 eMinLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 eMinLabel.setText("Minutes");
-                eMinLabel.setBounds(411, 314, 44, 22);
+                eMinLabel.setBounds(387, 314, 44, 22);
                 
                 //creates the end time's minute list
                 endMinList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL); //creates the list
@@ -355,7 +354,7 @@ public class Calendar {
                                 "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32",
                                 "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", 
                                 "52", "53", "54", "55", "56", "57", "58", "59"}); //entries 
-                endMinList.setBounds(411, 335, 44, 37);
+                endMinList.setBounds(398, 335, 44, 37);
                 
                 //description label
                 Label descripLabel = new Label(CalendarGUI, SWT.NONE);
@@ -373,21 +372,21 @@ public class Calendar {
                 Label priorityLabel = new Label(CalendarGUI, SWT.NONE);
                 priorityLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 priorityLabel.setFont(SWTResourceManager.getFont("Franklin Gothic Medium", 15, SWT.BOLD));
-                priorityLabel.setBounds(323, 423, 148, 30);
+                priorityLabel.setBounds(306, 423, 148, 30);
                 priorityLabel.setText("Priority Level");
                 
                 //description for priority level
                 priorityDescriptionLabel = new Label(CalendarGUI, SWT.NONE);
                 priorityDescriptionLabel.setFont(SWTResourceManager.getFont("Lucida Grande", 11, SWT.ITALIC));
                 priorityDescriptionLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                priorityDescriptionLabel.setBounds(342, 451, 139, 18);
+                priorityDescriptionLabel.setBounds(323, 451, 139, 18);
                 priorityDescriptionLabel.setText("\"0- lowest, 9- highest\"");
                 
                 //priority list where user can choose desired priority level
                 priorityList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
                 priorityList.setItems(new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"});
                 priorityList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
-                priorityList.setBounds(342, 475, 159, 49);
+                priorityList.setBounds(323, 475, 159, 49);
                 
                 Listener openerListener = new Listener() {
                       public void handleEvent(Event event) {
@@ -398,7 +397,7 @@ public class Calendar {
                 // creates a push button to submit
                 Button pushButton = new Button (CalendarGUI, SWT.BORDER);
                 pushButton.setSize(161, 29);
-                pushButton.setLocation(241, 546);
+                pushButton.setLocation(306, 565);
                 pushButton.setText("Create Event");
                 pushButton.addListener(SWT.Selection, openerListener);
                 pushButton.pack();
@@ -406,7 +405,7 @@ public class Calendar {
                 //button group to hold end dates AM and PM button
                 endGroupButton = new Composite(CalendarGUI, SWT.NONE);
                 endGroupButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                endGroupButton.setBounds(472, 330, 49, 42);
+                endGroupButton.setBounds(448, 330, 49, 42);
                 
                 ePM = new Button(endGroupButton, SWT.RADIO);
                 ePM.setBounds(0, 26, 49, 16);
@@ -417,65 +416,65 @@ public class Calendar {
                 eAM.setBounds(0, 4, 49, 16);
                 eAM.setText("AM");
                 
-                //recure event label
+                //Recurrence event label
                 Label recureLabel = new Label(CalendarGUI, SWT.NONE);
                 recureLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                recureLabel.setBounds(530, 430, 74, 15);
-                recureLabel.setText("Recure Event");
+                recureLabel.setBounds(519, 451, 91, 15);
+                recureLabel.setText("Recurring");
                 
                 coordLabel = new Label(CalendarGUI, SWT.NONE);
                 coordLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                coordLabel.setBounds(569, 233, 142, 15);
-                coordLabel.setText("Geographical Coordinates");
+                coordLabel.setBounds(546, 281, 142, 22);
+                coordLabel.setText("Geographic Coordinates");
                 
                 latitudeText = new Text(CalendarGUI, SWT.BORDER);
                 latitudeText.setText("-74.006605");
-                latitudeText.setBounds(584, 278, 127, 21);
+                latitudeText.setBounds(584, 342, 127, 21);
                 
                 longitudeText = new Text(CalendarGUI, SWT.BORDER);
                 longitudeText.setText("40.714623");
-                longitudeText.setBounds(584, 254, 127, 21);
+                longitudeText.setBounds(584, 311, 127, 21);
                 
                 Label longitudeLabel = new Label(CalendarGUI, SWT.NONE);
                 longitudeLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                longitudeLabel.setBounds(498, 254, 57, 15);
+                longitudeLabel.setBounds(521, 314, 57, 15);
                 longitudeLabel.setText("Longitude");
                 
                 Label latitudeLabel = new Label(CalendarGUI, SWT.NONE);
                 latitudeLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
                 latitudeLabel.setText("Latitude");
-                latitudeLabel.setBounds(509, 281, 57, 15);
+                latitudeLabel.setBounds(519, 345, 57, 15);
                 
                 recureList = new List(CalendarGUI, SWT.BORDER | SWT.V_SCROLL);
                 recureList.setEnabled(false);  
                 recureList.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
                 recureList.setItems(new String[] {"Daily", "Weekly", "Monthly", "Yearly"});
-                recureList.setBounds(634, 456, 100, 49);
+                recureList.setBounds(599, 475, 100, 49);
                 
                 recureEventButGrp = new Composite(CalendarGUI, SWT.NONE);
                 recureEventButGrp.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-                recureEventButGrp.setBounds(541, 453, 74, 41);
+                recureEventButGrp.setBounds(519, 475, 74, 41);
                 
                 yesRecurrButton = new Button(recureEventButGrp, SWT.RADIO);
                 yesRecurrButton.addSelectionListener(new SelectionAdapter() {
-                	@Override
-                	public void widgetSelected(SelectionEvent e) {
-                		recureList.setEnabled(true);
-                		//recure button was SELECTED add code here for 
-                		//recurrence event ..i think
-                		
-                	}
+                        @Override
+                        public void widgetSelected(SelectionEvent e) {
+                                recureList.setEnabled(true);
+                                //recure button was SELECTED add code here for 
+                                //recurrence event ..i think
+                                
+                        }
                 });
                 yesRecurrButton.setBounds(0, 0, 74, 16);
                 yesRecurrButton.setText("YES");
                 
                 noRecurrButton = new Button(recureEventButGrp, SWT.RADIO);
                 noRecurrButton.addSelectionListener(new SelectionAdapter() {
-                	@Override
-                	public void widgetSelected(SelectionEvent e) {
-                		recureList.setEnabled(false);
-                		//recure button was NOT SELECTED 
-                	}
+                        @Override
+                        public void widgetSelected(SelectionEvent e) {
+                                recureList.setEnabled(false);
+                                //recure button was NOT SELECTED 
+                        }
                 });
                 noRecurrButton.setBounds(0, 25, 74, 16);
                 noRecurrButton.setSelection(true);
@@ -529,7 +528,7 @@ public class Calendar {
         System.out.println("Description: " + descripBox.getText().trim());
         System.out.println("Start Date: " + startYear + "-" + (startMonth+1) + "-" + (startDay+1));
         
-        System.out.println("Priority level: " + priorityIndex+1);
+        System.out.println("Priority level: " + priorityIndex);
       
         //prints AM/PM
         if(sPM.getSelection())
@@ -550,136 +549,230 @@ public class Calendar {
         try
         {
                 
-        	dayValid = false;
+            dayValid = false;
             monthValid = false;
             yearValid = false;
             timeValid = false;
             textValid = false;  
-        	dayNumValid = false;
+                dayNumValid = false;
                 
                 //temp variables to check if event name and description are empty fields
                 String checkSummary = eventNameBox.getText().trim();
                 String checkDescrip = descripBox.getText().trim();
                 
                 
-            	/**********************************************
-            	 * if statements to check if data was entered
-            	 *********************************************/
-            	if(checkSummary.isEmpty() || checkDescrip.isEmpty()){ 
-            		JOptionPane.showMessageDialog(null, "Please Enter All Data Fields");
-            	}
-            	else if(startMonth == -1 || startDay == -1 || startYear == -1 || shour == -1 || smin == -1){ //check if there is nothing selected in the start month, day, year, and time
-            		JOptionPane.showMessageDialog(null, "Please Enter All Data Fields"); 
-            	}
-            	else if(endMonth == -1 || endDay == -1 || endYear == -1 || ehour == -1 || emin == -1){ //check if there is nothing selected in the end month, day, year, and time
-            		JOptionPane.showMessageDialog(null, "Please Enter All Data Fields");
-            	}
-            	else{
-            		textValid = true;
-            	}
-            	
-            	/************************************************************************************************
-            	 * if statements to check if the start time (hour, min) is before the end time (hour, min) 
-            	 ************************************************************************************************/
-            	if(tempEndTime < tempStartTime) //check if end time is before start time
-            		JOptionPane.showMessageDialog(null, "Bad Input: hour");
-            	else if(tempEndTime > tempStartTime && emin < smin)//create .ics file 
-                    timeValid = true;
-                else if(emin < smin) //check if end time min is before start time min
-                    JOptionPane.showMessageDialog(null, "Bad Input: minute");
-                else{
-                	timeValid = true;
+                /**********************************************
+                 * if statements to check if data was entered
+                 *********************************************/
+                if(checkSummary.isEmpty() || checkDescrip.isEmpty()){ 
+                	
+                     MessageBox emptyDescrip = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                 
+                     emptyDescrip.setText("Error");
+                     emptyDescrip.setMessage("Please Enter All Data Fields");
+                     emptyDescrip.open();
                 }
-            	
-            	/************************************************************************************************
-            	 * if statements to check if the start year is before the end year 
-            	 ************************************************************************************************/
-            	if(startYear <= endYear){ //2014 < 2015
-            		yearValid = true;
-            	}
-            	else{
-                    JOptionPane.showMessageDialog(null, "Bad Input: year");
-            	}
-            	
-            	/************************************************************************************************
-            	 * if statements to check if the start day is before the end day 
-            	 ************************************************************************************************/
-            	if(yearValid == true){ //1 < 2
-            		if(startMonth <= endMonth && startDay <= endDay)
-            			dayValid = true;
-            		else if(startMonth <= endMonth && startDay >= endDay)//possibility of bad time or year input
-            			dayValid = true;
-            		else if(startMonth >= endMonth && startDay <= endDay)
-            			dayValid = true;
-            		else if(startMonth >= endMonth && startDay >= endDay && startYear < endYear)
-            			dayValid = true;
-            	}
-            	else{
-                    JOptionPane.showMessageDialog(null, "Bad Input: day");
-            	}
+                else if(startMonth == -1 || startDay == -1 || startYear == -1 || shour == -1 || smin == -1){ //check if there is nothing selected in the start month, day, year, and time
+
+                    MessageBox emptyStart = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                    emptyStart.setText("Error");
+                    emptyStart.setMessage("Please Enter All Data Fields");
+                    emptyStart.open();
+                }
+                else if(endMonth == -1 || endDay == -1 || endYear == -1 || ehour == -1 || emin == -1){ //check if there is nothing selected in the end month, day, year, and time
+                    MessageBox emptyEnd = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                    emptyEnd.setText("Error");
+                    emptyEnd.setMessage("Please Enter All Data Fields");
+                    emptyEnd.open();
+                }
+                else{
+                        textValid = true;
+                }
                 
-            	/************************************************************************************************
-            	 * if statements to check if the start month is before the end month 
-            	 ************************************************************************************************/
-            	if(yearValid == true && dayValid == true){ //jan < feb
-            		if(startMonth <= endMonth)
-            			monthValid = true;
-            		else if(startMonth >= endMonth && endYear > startYear)
-            			monthValid = true;
-            		else
-            			JOptionPane.showMessageDialog(null, "Bad Input: month");
-            	}
-            	else{
-                    JOptionPane.showMessageDialog(null, "Bad Input: month");
-            	}
-            	
-            	/**************************************************************
-            	 * if statements to check if the month is correct
-            	 * also to check that the start month is before the end month
-            	 **************************************************************/
-            	//checks for February
+                /************************************************************************************************
+                 * if statements to check if the start time (hour, min) is before the end time (hour, min) 
+                 ************************************************************************************************/
+                if(tempEndTime < tempStartTime) //check if end time is before start time
+                {
+                    MessageBox badHour = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                    badHour.setText("Error");
+                    badHour.setMessage("Bad Hour Input");
+                    badHour.open();
+                }
+                else if(tempEndTime > tempStartTime && emin < smin)//create .ics file 
+                {
+                    timeValid = true;
+                }
+                else if(emin < smin) //check if end time min is before start time min
+                {
+                    MessageBox badMinute = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                    badMinute.setText("Error");
+                    badMinute.setMessage("Bad Minute Input");
+                    badMinute.open();
+                }
+                else{
+                        timeValid = true;
+                }
+                
+                /************************************************************************************************
+                 * if statements to check if the start year is before the end year 
+                 ************************************************************************************************/
+                if(startYear <= endYear){ //2014 < 2015
+                        yearValid = true;
+                }
+                else{
+                    MessageBox badYear = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                    badYear.setText("Error");
+                    badYear.setMessage("Bad Year Input");
+                    badYear.open();
+                }
+                
+                /************************************************************************************************
+                 * if statements to check if the start day is before the end day 
+                 ************************************************************************************************/
+                if(yearValid == true){ //1 < 2
+                        if(startMonth <= endMonth && startDay <= endDay)
+                                dayValid = true;
+                        else if(startMonth <= endMonth && startDay >= endDay)//possibility of bad time or year input
+                                dayValid = true;
+                        else if(startMonth >= endMonth && startDay <= endDay)
+                                dayValid = true;
+                        else if(startMonth >= endMonth && startDay >= endDay && startYear < endYear)
+                                dayValid = true;
+                }
+                else{
+                    MessageBox badDay = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                    badDay.setText("Error");
+                    badDay.setMessage("Bad Day Input");
+                    badDay.open();
+                }
+                
+                /************************************************************************************************
+                 * if statements to check if the start month is before the end month 
+                 ************************************************************************************************/
+                if(yearValid == true && dayValid == true){ //jan < feb
+                        if(startMonth <= endMonth)
+                                monthValid = true;
+                        else if(startMonth >= endMonth && endYear > startYear)
+                                monthValid = true;
+                        else
+                        {
+                            MessageBox badMonth = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                            badMonth.setText("Error");
+                            badMonth.setMessage("Bad Month Input");
+                            badMonth.open();
+                        }
+                }
+                else
+                {
+                    MessageBox badMonth = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                    badMonth.setText("Error");
+                    badMonth.setMessage("Bad Month Input");
+                    badMonth.open();
+                }
+                
+                /**************************************************************
+                 * if statements to check if the month is correct
+                 * also to check that the start month is before the end month
+                 **************************************************************/
+                //checks for February
                 if(startMonth ==  1 &&  startYear %4 == 0){
-                	if(startDay > 28)//it is a leap year for the start date
-                		JOptionPane.showMessageDialog(null, "Start Date Bad Input: It is a leap year, but you cannot enter 30 or 31 on February");
-                	else
-                		dayNumValid = true;
+                        if(startDay > 28)//it is a leap year for the start date
+                        {
+                        MessageBox startLeapYear = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                        startLeapYear.setText("Error");
+                        startLeapYear.setMessage("Start Date Bad Input: It is a leap year, but you cannot enter 30 or 31 on February");
+                        startLeapYear.open();
+                        }
+                                
+                        else
+                                dayNumValid = true;
                 }
                 else if(endMonth == 1 && endYear %4 == 0){//it is a leap year for the end date
-                	if(endDay > 28)
-                		JOptionPane.showMessageDialog(null, "End Date Bad Input: It is a leap year, but you cannot enter 30 or 31 on February");
-                	else
-                		dayNumValid = true;
+                        if(endDay > 28)
+                        {
+                            MessageBox endLeapYear = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                            endLeapYear.setText("Error");
+                            endLeapYear.setMessage("Start Date Bad Input: It is a leap year, but you cannot enter 30 or 31 on February");
+                            endLeapYear.open();
+                        }
+                        else
+                                dayNumValid = true;
                 }
                 else if(startDay >= 28 && startMonth == 1 || endMonth == 1 && endDay >= 28) //regular february
-                	JOptionPane.showMessageDialog(null, "Bad Input: It is February, so you cannot enter 29, 30, 31");
-            	
-            	//checks for months that dont have 31 days
-                else if(startDay == 30 && startMonth == 3)
-                	JOptionPane.showMessageDialog(null, "Start Date Bad Input: It is April, so you cannot enter 31");
-                else if(startDay == 30 && startMonth == 5)
-                	JOptionPane.showMessageDialog(null, "Start Date Bad Input: It is June, so you cannot enter 31");
-                else if(startDay == 30 && startMonth == 8)
-                	JOptionPane.showMessageDialog(null, "Start Date Bad Input: It is September, so you cannot enter 31");
-                else if(startDay == 30 && startMonth == 10)
-                	JOptionPane.showMessageDialog(null, "Start Date Bad Input: It is November, so you cannot enter 31");
-                else if(endDay == 30 && endMonth == 3)
-                	JOptionPane.showMessageDialog(null, "End Date Bad Input: It is April, so you cannot enter 31");
-                else if(endDay == 30 && endMonth == 5)
-                	JOptionPane.showMessageDialog(null, "End Date Bad Input: It is June, so you cannot enter 31");
-                else if(endDay == 30 && endMonth == 8)
-                	JOptionPane.showMessageDialog(null, "End Date Bad Input: It is September, so you cannot enter 31");
-                else if(endDay == 30 && endMonth == 10)
-                	JOptionPane.showMessageDialog(null, "End Date Bad Input: It is November, so you cannot enter 31");
+                {
+                    MessageBox febError = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                    febError.setText("Error");
+                    febError.setMessage("Bad Input: It is February, cannot enter 29, 30, 31");
+                    febError.open();    
+                }
                 
-            	
-            	//passed all the tests ready for .ics file creation
+                //checks for months that dont have 31 days
+                else if(startDay == 30 && startMonth == 3)
+                {
+                    MessageBox sAprilError = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                    sAprilError.setText("Error");
+                    sAprilError.setMessage("Start Date Bad Input: April does not have 31 days");
+                    sAprilError.open();
+                }
+                else if(startDay == 30 && startMonth == 5)
+                {
+                    MessageBox sJuneError = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                    sJuneError.setText("Error");
+                    sJuneError.setMessage("Start Date Bad Input: June does not have 31 days");
+                    sJuneError.open();    
+                }
+                else if(startDay == 30 && startMonth == 8)
+                {
+                    MessageBox sSeptError = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                    sSeptError.setText("Error");
+                    sSeptError.setMessage("Start Date Bad Input: September does not have 31 days");
+                    sSeptError.open();
+                }
+                else if(startDay == 30 && startMonth == 10)
+                {
+                    MessageBox sNovemError = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                    sNovemError.setText("Error");
+                    sNovemError.setMessage("Start Date Bad Input: November does not have 31 days");
+                    sNovemError.open();
+                }
+                else if(endDay == 30 && endMonth == 3)
+                {
+                    MessageBox eAprilError = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                    eAprilError.setText("Error");
+                    eAprilError.setMessage("End Date Bad Input: April does not have 31 days");
+                    eAprilError.open();
+                }
+                else if(endDay == 30 && endMonth == 5)
+                {
+                    MessageBox eJuneError = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                    eJuneError.setText("Error");
+                    eJuneError.setMessage("End Date Bad Input: June does not have 31 days");
+                    eJuneError.open();
+                }
+                else if(endDay == 30 && endMonth == 8)
+                {
+                    MessageBox eSeptError = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                    eSeptError.setText("Error");
+                    eSeptError.setMessage("End Date Bad Input: September does not have 31 days");
+                    eSeptError.open();
+                }
+                else if(endDay == 30 && endMonth == 10)
+                {
+                    MessageBox eNovemError = new MessageBox(CalendarGUI, SWT.ICON_INFORMATION | SWT.OK);                   
+                    eNovemError.setText("Error");
+                    eNovemError.setMessage("End Date Bad Input: November does not have 31 days");
+                    eNovemError.open();
+                }
+                
+                
+                //passed all the tests ready for .ics file creation
                 else
                     dayNumValid = true;
 
-            	/**********************
-            	 * if passed all the valid checks
-            	 * then create the .ics file
-            	 **********************/
+                /**********************
+                 * if passed all the valid checks
+                 * then create the .ics file
+                 **********************/
                     if(dayNumValid == true && dayValid == true && monthValid == true && yearValid == true && timeValid == true && textValid ==true){
                         //New calendar object
             
@@ -695,8 +788,6 @@ public class Calendar {
                         event.setSummary(summary);
                         Description description = new Description(descripBox.getText().trim());
                         event.setDescription(description);
-            
-                        summary.setLanguage("en-us");
                 
                         TimeZone currentZone = TimeZone.getTimeZone("America/Hawaii");
                         Locale currentLocale = Locale.ENGLISH;
@@ -707,7 +798,7 @@ public class Calendar {
                         
                         //sets the event priority
                         
-                      //  event.setPriority(priorityIndex);
+                        event.setPriority(priorityIndex);
                         
                         //sets the geographic location
                         
@@ -755,8 +846,13 @@ public class Calendar {
                         File file = new File("event.ics");
             
                         Biweekly.write(calendar).go(file);
-
-                        JOptionPane.showMessageDialog(null, "Event Created");
+                        
+                        int style = SWT.ICON_INFORMATION | SWT.OK;
+                        MessageBox dialog = new MessageBox(CalendarGUI, style);
+                     
+                        dialog.setText("Confirmation");
+                        dialog.setMessage("Event Created");
+                        dialog.open();
             
                         System.exit(0);
                         
